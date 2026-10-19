@@ -16,11 +16,11 @@ La API SHALL exponer `GET /api/tipos-servicio` para cualquier usuario autenticad
 La API SHALL exponer `POST /api/tipos-servicio`, `PATCH /api/tipos-servicio/:id` y `DELETE /api/tipos-servicio/:id` (baja lógica), exclusivos de `admin`, con los campos y reglas de `TipoServicio` en `domain-model` más `orden` (entero, por defecto 0). `preciosPorVehiculo` SHALL aceptar solo las claves `auto`, `camioneta`, `moto` y `otro`, con valores enteros mayores o iguales a 0. Un nombre repetido entre tipos activos SHALL responder 409.
 
 #### Scenario: Crear un servicio con precio por vehículo
-- **WHEN** el admin crea "Lavado completo" con `precioBase` 35000 y `preciosPorVehiculo: { "camioneta": 45000 }`
+- **WHEN** el admin crea "Lavado completo" con `precioBase` 2500 y `preciosPorVehiculo: { "camioneta": 3200 }`
 - **THEN** la API responde 201 con el tipo creado
 
 #### Scenario: Clave de vehículo inválida
-- **WHEN** el admin envía `preciosPorVehiculo: { "bus": 60000 }`
+- **WHEN** el admin envía `preciosPorVehiculo: { "bus": 4000 }`
 - **THEN** la API responde 400 indicando que `bus` no es un tipo de vehículo válido
 
 #### Scenario: Empleado intenta cambiar un precio
@@ -32,7 +32,7 @@ La API SHALL exponer `GET /api/tipos-servicio/:id/precio?tipoVehiculo=<tipo>`, q
 
 #### Scenario: Vehículo sin precio específico
 - **WHEN** se pide el precio de "Lavado completo" para una moto y no tiene precio de moto
-- **THEN** la respuesta es `{ "precio": 35000 }`
+- **THEN** la respuesta es `{ "precio": 2500 }`
 
 ### Requirement: Baja sin afectar el historial
 Dar de baja un tipo de servicio SHALL impedir registrar servicios nuevos con él, pero SHALL NOT modificar los servicios prestados que ya lo usan ni quitarlo de las métricas de fechas pasadas.

@@ -39,11 +39,11 @@ Los listados SHALL aceptar `page` (desde 1, por defecto 1) y `limit` (por defect
 - **THEN** la respuesta trae los clientes 21 a 40 y `total` con la cantidad total de clientes activos
 
 ### Requirement: Formato de datos
-Los cuerpos SHALL ser JSON con propiedades en `camelCase`. Las fechas SHALL enviarse y recibirse en ISO 8601; las que guarda la API SHALL estar en UTC. Los parámetros de rango por día (`desde`, `hasta`) SHALL aceptar fechas `YYYY-MM-DD` interpretadas en la zona horaria del negocio (`APP_TIMEZONE`, por defecto `America/Bogota`), con `hasta` inclusivo. Los montos SHALL ser enteros en la unidad mínima de la moneda (`APP_CURRENCY`, por defecto `COP`).
+Los cuerpos SHALL ser JSON con propiedades en `camelCase`. Las fechas SHALL enviarse y recibirse en ISO 8601; las que guarda la API SHALL estar en UTC. Los parámetros de rango por día (`desde`, `hasta`) SHALL aceptar fechas `YYYY-MM-DD` interpretadas en la zona horaria del negocio (`APP_TIMEZONE`, por defecto `Europe/Lisbon`), con `hasta` inclusivo. Los montos SHALL ser enteros en la unidad mínima de la moneda (`APP_CURRENCY`, por defecto `EUR`, en céntimos).
 
 #### Scenario: Servicios de un día
 - **WHEN** se pide `GET /api/servicios-prestados?desde=2026-10-18&hasta=2026-10-18`
-- **THEN** la API devuelve los servicios entre las 00:00 y las 23:59:59.999 hora de Bogotá de ese día
+- **THEN** la API devuelve los servicios entre las 00:00 y las 23:59:59.999 hora de Portugal de ese día
 
 ### Requirement: Validación de entrada
 La API SHALL validar todos los cuerpos, parámetros de ruta y de consulta con `class-validator` mediante un `ValidationPipe` global con `whitelist`, `forbidNonWhitelisted` y `transform` activados, rechazando propiedades no declaradas en el DTO. Los textos SHALL recortarse (`trim`) antes de validarse. Los mensajes de validación SHALL estar en español.
@@ -61,7 +61,7 @@ Toda respuesta de error SHALL tener la forma `{ "statusCode": <n>, "error": "<no
 
 #### Scenario: Placa duplicada
 - **WHEN** se crea un vehículo con una placa ya registrada
-- **THEN** la API responde 409 con `message: "La placa ABC123 ya está registrada"`
+- **THEN** la API responde 409 con `message: "La placa AA12BB ya está registrada"`
 
 #### Scenario: Error inesperado
 - **WHEN** falla la base de datos durante una petición

@@ -53,7 +53,7 @@ El proyecto es sin fines de lucro, por lo que SHALL preferir herramientas gratui
 Una dependencia nueva SHALL agregarse solo si resuelve algo que la plataforma o las dependencias existentes no resuelven razonablemente, y su motivo SHALL quedar en el `design.md` del cambio o en la descripción del pull request. Las versiones SHALL fijarse en `package-lock.json`, que siempre se versiona.
 
 #### Scenario: Librería de fechas
-- **WHEN** se necesita formatear fechas en `es-CO`
+- **WHEN** se necesita formatear fechas en `es-ES`
 - **THEN** se usa primero `Intl.DateTimeFormat`, y solo se agrega una librería si `Intl` no alcanza
 
 ### Requirement: Registro de decisiones técnicas

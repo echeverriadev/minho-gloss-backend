@@ -9,8 +9,8 @@ Registro y consulta de los clientes del autolavado, con búsqueda rápida por no
 La API SHALL exponer `POST /api/clientes` para usuarios autenticados, con `{ nombre, telefono, email?, aceptaContacto, notas? }` validados según `domain-model`, y SHALL responder 201 con el cliente creado y el teléfono normalizado. El cuerpo MAY incluir `vehiculos: [{ placa, tipo, marca?, modelo?, color? }]` para crear el cliente y sus vehículos en una sola operación; si algún vehículo es inválido, no se SHALL crear nada.
 
 #### Scenario: Cliente nuevo con su vehículo
-- **WHEN** un empleado envía un cliente con un vehículo de placa `abc 123`
-- **THEN** la API responde 201 con el cliente y un vehículo con placa `ABC123`
+- **WHEN** un empleado envía un cliente con un vehículo de placa `aa 12 bb`
+- **THEN** la API responde 201 con el cliente y un vehículo con placa `AA12BB`
 
 #### Scenario: Teléfono ya registrado
 - **WHEN** se crea un cliente con un teléfono que ya usa otro cliente activo
@@ -20,8 +20,8 @@ La API SHALL exponer `POST /api/clientes` para usuarios autenticados, con `{ nom
 La API SHALL exponer `GET /api/clientes` con paginación estándar, orden por defecto `nombre` ascendente y parámetro `q`. Con `q`, SHALL devolver los clientes cuyo nombre contenga una palabra que empiece por `q` (sin distinguir mayúsculas ni tildes), cuyo teléfono empiece por `q` normalizado, o que tengan un vehículo activo cuya placa empiece por `q` normalizado. Cada cliente del listado SHALL incluir las placas de sus vehículos activos.
 
 #### Scenario: Buscar por parte de la placa
-- **WHEN** se pide `GET /api/clientes?q=abc`
-- **THEN** la respuesta incluye al cliente dueño del vehículo `ABC123`
+- **WHEN** se pide `GET /api/clientes?q=aa12`
+- **THEN** la respuesta incluye al cliente dueño del vehículo `AA12BB`
 
 #### Scenario: Buscar por nombre sin tilde
 - **WHEN** se pide `GET /api/clientes?q=jose`
@@ -51,3 +51,11 @@ La API SHALL exponer `DELETE /api/clientes/:id`, exclusivo de `admin`, que da de
 #### Scenario: Baja con historial
 - **WHEN** el admin da de baja a un cliente con servicios prestados
 - **THEN** el cliente y sus vehículos quedan inactivos y sus servicios siguen en las métricas
+
+### Requirement: Anonimización de un cliente
+La API SHALL exponer `POST /api/clientes/:id/anonimizar`, exclusivo de `admin`, que aplica el derecho de supresión de `domain-model` (RGPD) y responde 204. Un cliente ya anonimizado SHALL responder 409.
+
+#### Scenario: Supresión a pedido del cliente
+- **WHEN** el admin anonimiza a un cliente
+- **THEN** `GET /api/clientes?q=<nombre anterior>` ya no lo devuelve y sus servicios siguen en las métricas
+

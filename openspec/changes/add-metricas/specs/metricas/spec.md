@@ -27,7 +27,7 @@ La API SHALL exponer `GET /api/metricas/resumen?desde&hasta`, que responde con:
 - `periodoAnterior`: `{ desde, hasta, ingresos, cantidadServicios, variacionIngresos, variacionCantidad }`, con variaciones en porcentaje o `null` si el periodo anterior es 0.
 
 #### Scenario: Resumen de un día
-- **WHEN** el 18 de octubre se registraron 3 servicios de 20000, 20000 y 35000, y uno de ellos fue anulado
+- **WHEN** el 18 de octubre se registraron 3 servicios de 1500, 1500 y 2500, y uno de ellos fue anulado
 - **THEN** el resumen de ese día tiene `cantidadServicios` 2 y los ingresos de los dos servicios no anulados
 
 #### Scenario: Comparación con la semana anterior

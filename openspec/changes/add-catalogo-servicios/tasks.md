@@ -10,7 +10,7 @@
 
 ## 2. Documentación
 
-- [ ] 2.1 Documentar en Swagger los endpoints con ejemplos de precios en COP y respuestas 400/401/403/404/409
+- [ ] 2.1 Documentar en Swagger los endpoints con ejemplos de precios en céntimos de euro y respuestas 400/401/403/404/409
 
 ## 3. Pruebas
 

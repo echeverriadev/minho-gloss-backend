@@ -40,7 +40,7 @@ Todas las rutas cuelgan de `/api` y requieren sesión salvo las marcadas como p�
 | `GET /auth/me` · `POST /auth/cambiar-password` | cualquiera | `add-auth` |
 | `GET·POST /usuarios` · `PATCH·DELETE /usuarios/:id` · `POST /usuarios/:id/restablecer-password` | admin | `add-auth` |
 | `GET·POST /clientes` · `GET·PATCH /clientes/:id` | cualquiera | `add-clientes` |
-| `DELETE /clientes/:id` | admin | `add-clientes` |
+| `DELETE /clientes/:id` · `POST /clientes/:id/anonimizar` (RGPD) | admin | `add-clientes` |
 | `POST /clientes/:id/vehiculos` · `GET /vehiculos/por-placa/:placa` · `PATCH·DELETE /vehiculos/:id` | cualquiera | `add-clientes` |
 | `GET /tipos-servicio` · `GET /tipos-servicio/:id/precio` | cualquiera | `add-catalogo-servicios` |
 | `POST /tipos-servicio` · `PATCH·DELETE /tipos-servicio/:id` | admin | `add-catalogo-servicios` |

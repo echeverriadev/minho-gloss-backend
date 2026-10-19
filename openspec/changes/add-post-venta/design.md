@@ -2,7 +2,7 @@
 
 ## Context
 
-El negocio tiene pocos cientos o miles de clientes; en un día normal habrá de cero a algunas decenas de clientes para contactar. Debe costar cero y respetar la autorización de contacto del cliente (Ley 1581 de 2012 de protección de datos en Colombia).
+El negocio tiene pocos cientos o miles de clientes; en un día normal habrá de cero a algunas decenas de clientes para contactar. Debe costar cero y respetar la autorización de contacto del cliente (Reglamento General de Protección de Datos, RGPD, de la Unión Europea).
 
 ## Goals / Non-Goals
 

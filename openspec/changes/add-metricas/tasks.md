@@ -16,7 +16,7 @@
 ## 3. Pruebas
 
 - [ ] 3.1 Pruebas con datos de ejemplo: anulados excluidos, ticket promedio, descuentos, variación con periodo anterior en 0
-- [ ] 3.2 Prueba del corte de día en `America/Bogota` (servicio a las 23:30 y a las 00:15)
+- [ ] 3.2 Prueba del corte de día en `Europe/Lisbon` (servicio a las 23:30 y a las 00:15)
 - [ ] 3.3 Prueba de nuevos vs recurrentes y de días vacíos en la serie
 - [ ] 3.4 Pruebas e2e: 403 de empleado, 400 por rango inválido
 - [ ] 3.5 Ejecutar `npm run check` y dejarlo en verde

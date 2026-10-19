@@ -17,6 +17,6 @@
 
 - [ ] 3.1 Pruebas unitarias del registro (valores por defecto, tipo inactivo, fecha futura, fecha pasada por rol)
 - [ ] 3.2 Pruebas unitarias de la anulación y del recálculo de contadores
-- [ ] 3.3 Prueba del filtro por día con un servicio a las 23:30 hora de Bogotá
+- [ ] 3.3 Prueba del filtro por día con un servicio a las 23:30 hora de Portugal
 - [ ] 3.4 Pruebas e2e: registrar, listar el día con resumen, anular como admin, 403 como empleado
 - [ ] 3.5 Ejecutar `npm run check` y dejarlo en verde

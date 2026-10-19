@@ -18,12 +18,13 @@ Fases del roadmap: 0 entorno · 1 specs y convenciones · 2 backend · 3 fronten
 | D6 | Los warnings de lint fallan la integración continua (`--deny-warnings`) | Evita que se acumulen warnings ignorados; si una regla no aplica en un caso, se desactiva en esa línea con un comentario que diga por qué | 1 |
 | D7 | Integración continua con GitHub Actions (lint, formato, tipos, pruebas, build y validación de specs) | Gratis para repos de GitHub; protege `develop` y `main` | 1 |
 | D8 | Sin hooks de Git locales (Husky, lint-staged) por ahora | Los hooks corren en la máquina, que no tiene Node instalado (todo vive en Docker); la CI cumple ese rol | 1 |
-| D9 | Montos como enteros en pesos colombianos (COP) y fechas en UTC con zona de negocio `America/Bogota` | Evita errores de redondeo y de cambio de día en las métricas | 1 |
+| D9 | Montos como enteros en céntimos de euro (EUR) y fechas en UTC con zona de negocio `Europe/Lisbon` (negocio en Braga) | Evita errores de redondeo y de cambio de día en las métricas | 1 |
 | D10 | Baja lógica (`activo: false`) en lugar de borrado físico | Conserva el historial y las métricas | 1 |
 | D11 | Autenticación con JWT de acceso (sin refresh token en la v1) y contraseñas con hash | Simple para un solo negocio con pocos usuarios; el detalle está en el `design.md` de `add-auth` | 1 |
 | D12 | Validación con `class-validator` en el backend y reglas de React Hook Form en el frontend | Es lo que traen NestJS y React Hook Form; ver S1 para unificarlas | 1 |
 | D13 | WhatsApp de post-venta con enlaces `wa.me` que abre el usuario, sin API de pago | Costo cero; la API oficial de WhatsApp Business cobra por conversación | 1 |
 | D14 | Los términos del negocio en español en el código y las rutas (`/api/clientes`) | Coinciden con el lenguaje del dueño y las specs; los términos técnicos quedan en inglés | 1 |
+| D15 | Negocio en Braga (Portugal): euros en céntimos, zona `Europe/Lisbon`, prefijo `+351`, RGPD (consentimiento de contacto y derecho de supresión) e interfaz en español con formato `es-ES` | Datos confirmados por el dueño del proyecto | 1 |
 
 ## Sugerencias pendientes
 
@@ -41,6 +42,7 @@ Fases del roadmap: 0 entorno · 1 specs y convenciones · 2 backend · 3 fronten
 | S10 | Instalar la app como PWA (manifest e ícono) para abrirla como una app en el celular | Uso diario desde el celular del patio | Gratis | 3 |
 | S11 | Protección de ramas en GitHub para `main` y `develop` (pull request obligatorio y CI en verde) | `git-workflow` lo exige; se configura a mano en GitHub | Gratis | 1 |
 | S12 | Exportar clientes y servicios a CSV desde la app | El dueño puede querer llevarse sus datos a una hoja de cálculo | Gratis | después de la v1 |
+| S13 | Traducir la interfaz al portugués (`pt-PT`) además del español | El negocio está en Braga y puede tener empleados o clientes que prefieran portugués | Gratis; requiere extraer los textos a archivos de traducción | después de la v1 |
 
 ## Sugerencias descartadas
 

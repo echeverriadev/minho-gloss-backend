@@ -11,6 +11,7 @@
 - [ ] 2.1 Crear esquema `Cliente` con índice único parcial en `telefono` y campos `ultimoServicioEn` y `totalServicios`
 - [ ] 2.2 Implementar `ClientesService` (create con vehículos en una transacción o con compensación, findAll con búsqueda `q`, findOne con vehículos, update, remove con baja de vehículos, actualizarContadores)
 - [ ] 2.3 Implementar `ClientesController` con DTOs; `DELETE` solo para `admin`
+- [ ] 2.4 Implementar `POST /api/clientes/:id/anonimizar` (RGPD) con anonimización de vehículos y descarte de recordatorios
 
 ## 3. Vehículos
 
@@ -25,6 +26,6 @@
 ## 5. Pruebas
 
 - [ ] 5.1 Pruebas unitarias de búsqueda (nombre sin tilde, prefijo de teléfono, prefijo de placa) y de duplicados
-- [ ] 5.2 Pruebas unitarias de la baja de cliente con sus vehículos
+- [ ] 5.2 Pruebas unitarias de la baja de cliente con sus vehículos y de la anonimización
 - [ ] 5.3 Pruebas e2e: alta con vehículo, 409 por placa repetida, búsqueda por placa, 403 de empleado al dar de baja
 - [ ] 5.4 Ejecutar `npm run check` y dejarlo en verde

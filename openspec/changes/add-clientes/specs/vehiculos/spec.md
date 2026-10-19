@@ -13,15 +13,15 @@ La API SHALL exponer `POST /api/clientes/:id/vehiculos` con `{ placa, tipo, marc
 - **THEN** el cliente queda con dos vehículos activos
 
 #### Scenario: Placa de otro cliente
-- **WHEN** se agrega la placa `ABC123` que ya pertenece a otro cliente activo
-- **THEN** la API responde 409 con el mensaje "La placa ABC123 ya está registrada para <nombre>"
+- **WHEN** se agrega la placa `AA12BB` que ya pertenece a otro cliente activo
+- **THEN** la API responde 409 con el mensaje "La placa AA12BB ya está registrada para <nombre>"
 
 ### Requirement: Buscar vehículo por placa
 La API SHALL exponer `GET /api/vehiculos/por-placa/:placa`, que normaliza la placa y devuelve el vehículo activo con su cliente (`id`, `nombre`, `telefono`), o 404 si no existe.
 
 #### Scenario: Placa conocida escrita con guion
-- **WHEN** se pide `GET /api/vehiculos/por-placa/abc-123`
-- **THEN** la API devuelve el vehículo `ABC123` con los datos de su cliente
+- **WHEN** se pide `GET /api/vehiculos/por-placa/aa-12-bb`
+- **THEN** la API devuelve el vehículo `AA12BB` con los datos de su cliente
 
 #### Scenario: Placa desconocida
 - **WHEN** se pide una placa que no está registrada

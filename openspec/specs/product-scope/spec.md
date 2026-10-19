@@ -54,10 +54,10 @@ El producto SHALL poder operarse con costo mensual cero o cercano a cero, usando
 - **THEN** el proveedor elegido tiene un plan gratuito suficiente para el volumen esperado (decenas de correos al día)
 
 ### Requirement: Contexto regional
-La app SHALL estar en español. Por defecto SHALL usar la zona horaria `America/Bogota`, la moneda peso colombiano (COP, sin decimales) y el formato regional `es-CO`; estos valores SHALL poder cambiarse por configuración sin tocar código.
+La app SHALL estar en español. El negocio está en Braga (Portugal), por lo que por defecto SHALL usar la zona horaria `Europe/Lisbon` (con su cambio de horario de verano), la moneda euro (EUR, con dos decimales), el formato regional `es-ES` para los textos en español y el prefijo telefónico `+351`; estos valores SHALL poder cambiarse por configuración sin tocar código.
 
 #### Scenario: Fin del día
-- **WHEN** se registra un servicio a las 23:30 hora de Bogotá
+- **WHEN** se registra un servicio a las 23:30 hora de Portugal
 - **THEN** cuenta para las métricas de ese día y no del siguiente, aunque en UTC ya sea otro día
 
 ### Requirement: Glosario
