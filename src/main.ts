@@ -11,7 +11,9 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
   app.enableCors({ origin: config.get('corsOrigin', { infer: true }) });
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+  app.useGlobalPipes(
+    new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }),
+  );
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Minho Gloss API')
