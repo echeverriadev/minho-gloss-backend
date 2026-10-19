@@ -1,0 +1,22 @@
+schema: spec-driven
+
+context: |
+  Language: es
+  All artifacts must be written in es.
+  Keep OpenSpec structural headings and SHALL/MUST keywords in English.
+
+  Proyecto: Minho Gloss, app de gestión de un autolavado (clientes, servicios con tipos y precios,
+  métricas diarias de servicios, post-venta por correo y teléfono, inicio de sesión).
+  Proyecto sin fines de lucro: priorizar siempre el costo mínimo y herramientas gratuitas.
+  Este repo es el BACKEND: NestJS 12 + TypeScript, MongoDB con Mongoose, Swagger, Vitest, oxlint y Prettier.
+  El frontend vive en otro repo (minho-gloss-frontend: React + Vite).
+  Todo corre en Docker (docker compose); los comandos se ejecutan con `docker compose exec api ...`.
+  Git Flow: ramas feature/* desde develop; Conventional Commits.
+
+rules:
+  proposal:
+    - Indicar qué queda fuera de alcance
+  design:
+    - Si se introduce un servicio externo, comparar al menos una opción gratuita
+  tasks:
+    - Incluir tareas de pruebas y de documentación Swagger para cada endpoint nuevo

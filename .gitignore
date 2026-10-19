@@ -1,0 +1,19 @@
+# dependencias y compilados
+node_modules
+dist
+coverage
+*.tsbuildinfo
+
+# entorno
+.env
+.env.*
+!.env.example
+
+# logs
+*.log
+
+# editores / SO
+.idea
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
