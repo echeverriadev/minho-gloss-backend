@@ -1,4 +1,4 @@
-import { INestApplication } from '@nestjs/common';
+import type { INestApplication } from '@nestjs/common';
 import { getConnectionToken } from '@nestjs/mongoose';
 import { Test } from '@nestjs/testing';
 import mongoose from 'mongoose';
@@ -12,7 +12,10 @@ describe('Health (e2e)', () => {
     const moduleRef = await Test.createTestingModule({
       controllers: [HealthController],
       providers: [
-        { provide: getConnectionToken(), useValue: { readyState: mongoose.ConnectionStates.connected } },
+        {
+          provide: getConnectionToken(),
+          useValue: { readyState: mongoose.ConnectionStates.connected },
+        },
       ],
     }).compile();
 
