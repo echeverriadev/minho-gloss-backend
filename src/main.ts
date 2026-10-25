@@ -3,14 +3,23 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module.js';
 import { configurarApp } from './app.setup.js';
-import type { AppConfig } from './config/configuration.js';
+import { type AppConfig, isOrigenPermitido } from './config/configuration.js';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = app.get(ConfigService<AppConfig, true>);
 
   configurarApp(app);
-  app.enableCors({ origin: config.get('corsOrigin', { infer: true }) });
+  const cors = {
+    corsOrigins: config.get('corsOrigins', { infer: true }),
+    nodeEnv: config.get('nodeEnv', { infer: true }),
+  };
+  app.enableCors({
+    origin: (
+      origen: string | undefined,
+      callback: (error: Error | null, permitido?: boolean) => void,
+    ) => callback(null, isOrigenPermitido(origen, cors)),
+  });
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Minho Gloss API')
