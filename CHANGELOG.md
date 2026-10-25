@@ -6,6 +6,18 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+### Agregado
+
+- **Operación del día (fase 3):** `POST /api/atenciones` registra cada visita con uno o más servicios y extras del catálogo, cliente opcional, tipo de vehículo, placa opcional, método de pago y notas. La API copia nombre y precio de lista según el vehículo, calcula el total y asigna un número correlativo.
+- **Precios personalizados:** solo el admin puede cobrar otro precio en una línea o agregar un servicio fuera del catálogo; el catálogo no cambia. Un empleado recibe 403.
+- **Consulta:** listado por días en la hora de Portugal con resumen de cantidad y total, historial por cliente y detalle con los datos del cliente para el detalle imprimible.
+- **Correcciones:** cambio del método de pago y las notas (el empleado solo el mismo día) y anulación con motivo solo para el admin. Los contadores del cliente (último servicio y total) se recalculan.
+- `APP_TIMEZONE` para la zona horaria del negocio (por defecto `Europe/Lisbon`).
+
+### Cambiado
+
+- Borrar los datos personales de un cliente (RGPD) también vacía la placa de sus atenciones.
+
 ## [0.2.0] - 2026-10-25
 
 Primera versión publicada. Incluye las fases 0, 1 y 2 del roadmap: entorno, especificaciones y la base funcional de la API (acceso, usuarios, clientes, catálogo de servicios y preferencias).

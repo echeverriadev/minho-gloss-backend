@@ -95,7 +95,9 @@ function crearDependencias() {
     findOneAndUpdate: vi.fn(),
     findByIdAndUpdate: vi.fn(),
     countDocuments: vi.fn(() => query(0)),
-    aggregate: vi.fn(() => ({ exec: () => Promise.resolve([]) })),
+    aggregate: vi.fn(() => ({
+      exec: () => Promise.resolve<{ cantidad: number; total: number }[]>([]),
+    })),
   };
   const contadorModel = { findOneAndUpdate: vi.fn(() => query({ _id: 'atenciones', valor: 7 })) };
   const clientes = {
