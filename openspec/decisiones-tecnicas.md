@@ -32,6 +32,7 @@ Fases del roadmap: 0 entorno · 1 specs y convenciones · 2 backend · 3 fronten
 | D20 | Tipos de vehículo `ligeiro`, `suv`, `monovolume` y `carrinha`; catálogo único de servicios y extras (`categoria`) con cuatro precios por vehículo o precio único | Son los medios de transporte y la lista de precios reales del negocio; en los extras con dos precios se asume primero Ligeiro/SUV y luego Monovolume/Carrinha hasta que el dueño lo confirme | 2 |
 | D21 | Idioma por usuario: español o portugués de Portugal (`pt-PT`). Diccionarios tipados propios en el frontend (sin librería de i18n) y traducción de los mensajes de la API según `Accept-Language` | Pedido del dueño; con dos idiomas un objeto tipado detecta en el build cualquier texto sin traducir y no suma dependencias. Adopta la sugerencia S13 | 2 |
 | D22 | Tema claro u oscuro por usuario, con modo oscuro hecho redefiniendo los colores del tema de Tailwind bajo la clase `dark` | Cambia todas las pantallas sin repetir `dark:` en cada componente | 2 |
+| D23 | SemVer Simplificado (`MAJOR` 0 hasta la v1, `MINOR` = fase del roadmap, `PATCH` = correcciones) con `CHANGELOG.md` por repo y releases de GitHub | Pedido del dueño; versiones fáciles de leer que dicen en qué fase está el proyecto | 2 |
 
 ## Sugerencias pendientes
 
