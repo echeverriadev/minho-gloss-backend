@@ -8,6 +8,7 @@ import configuration, { type AppConfig } from './config/configuration.js';
 import { AuthModule } from './modules/auth/auth.module.js';
 import { ClientesModule } from './modules/clientes/clientes.module.js';
 import { HealthModule } from './modules/health/health.module.js';
+import { TiposServicioModule } from './modules/tipos-servicio/tipos-servicio.module.js';
 import { UsuariosModule } from './modules/usuarios/usuarios.module.js';
 
 @Module({
@@ -23,6 +24,7 @@ import { UsuariosModule } from './modules/usuarios/usuarios.module.js';
     UsuariosModule,
     AuthModule,
     ClientesModule,
+    TiposServicioModule,
   ],
   providers: [
     // Protegido por defecto: primero se exige sesión y luego el rol (spec auth).

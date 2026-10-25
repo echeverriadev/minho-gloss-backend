@@ -1,3 +1,4 @@
+import type { Preferencias } from '../preferencias/preferencias.js';
 import type { Rol } from './roles.js';
 
 /** Usuario autenticado que el `JwtAuthGuard` deja en la petición. */
@@ -6,6 +7,7 @@ export interface UsuarioSesion {
   nombre: string;
   email: string;
   rol: Rol;
+  preferencias: Preferencias;
 }
 
 /** Contenido del token de acceso (spec auth: payload mínimo). */

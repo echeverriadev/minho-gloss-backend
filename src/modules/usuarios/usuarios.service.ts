@@ -11,6 +11,10 @@ import { hash } from 'bcryptjs';
 import type { Model } from 'mongoose';
 import type { UsuarioSesion } from '../../common/auth/usuario-sesion.js';
 import { toId } from '../../common/mongo/to-id.js';
+import {
+  type Preferencias,
+  PREFERENCIAS_POR_DEFECTO,
+} from '../../common/preferencias/preferencias.js';
 import { type Paginated, parseSort } from '../../common/pagination/pagination-query.dto.js';
 import type { AppConfig } from '../../config/configuration.js';
 import type { CreateUsuarioDto } from './dto/create-usuario.dto.js';
@@ -155,6 +159,18 @@ export class UsuariosService implements OnApplicationBootstrap {
       .exec();
   }
 
+  /** Cambia solo las preferencias del propio usuario y devuelve cómo quedaron. */
+  async updatePreferencias(id: string, cambios: Partial<Preferencias>): Promise<Preferencias> {
+    const actual = await this.findLeanOrFail(id);
+    const { preferencias: guardadas } = toSesion(actual);
+    const preferencias: Preferencias = {
+      idioma: cambios.idioma ?? guardadas.idioma,
+      tema: cambios.tema ?? guardadas.tema,
+    };
+    await this.usuarioModel.updateOne({ _id: id }, { $set: { preferencias } }).exec();
+    return preferencias;
+  }
+
   async guardarTokenRecuperacion(id: string, tokenHash: string, venceEn: Date): Promise<void> {
     await this.usuarioModel
       .updateOne(
@@ -205,12 +221,17 @@ export class UsuariosService implements OnApplicationBootstrap {
 }
 
 export function toSesion(
-  usuario: Pick<UsuarioLean, '_id' | 'nombre' | 'email' | 'rol'>,
+  usuario: Pick<UsuarioLean, '_id' | 'nombre' | 'email' | 'rol' | 'preferencias'>,
 ): UsuarioSesion {
   return {
     id: toId(usuario),
     nombre: usuario.nombre,
     email: usuario.email,
     rol: usuario.rol,
+    // Los usuarios creados antes de las preferencias no tienen el campo guardado.
+    preferencias: {
+      idioma: usuario.preferencias?.idioma ?? PREFERENCIAS_POR_DEFECTO.idioma,
+      tema: usuario.preferencias?.tema ?? PREFERENCIAS_POR_DEFECTO.tema,
+    },
   };
 }

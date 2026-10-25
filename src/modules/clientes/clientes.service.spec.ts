@@ -6,8 +6,20 @@ import { ClientesService, filtroBusqueda, MENSAJE_YA_ANONIMIZADO } from './clien
 import type { CreateClienteDto } from './dto/create-cliente.dto.js';
 import type { Cliente, ClienteLean } from './schemas/cliente.schema.js';
 
-const ADMIN: UsuarioSesion = { id: 'a', nombre: 'Admin', email: 'a@x.pt', rol: 'admin' };
-const EMPLEADO: UsuarioSesion = { id: 'e', nombre: 'Empleado', email: 'e@x.pt', rol: 'empleado' };
+const ADMIN: UsuarioSesion = {
+  id: 'a',
+  nombre: 'Admin',
+  email: 'a@x.pt',
+  rol: 'admin',
+  preferencias: { idioma: 'es', tema: 'claro' },
+};
+const EMPLEADO: UsuarioSesion = {
+  id: 'e',
+  nombre: 'Empleado',
+  email: 'e@x.pt',
+  rol: 'empleado',
+  preferencias: { idioma: 'es', tema: 'claro' },
+};
 
 const DTO: CreateClienteDto = {
   nombre: 'José',

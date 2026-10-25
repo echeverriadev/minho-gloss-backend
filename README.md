@@ -4,6 +4,8 @@ API de gestión del autolavado Minho Gloss: clientes, servicios, métricas y pos
 
 **Stack:** NestJS 12 · TypeScript · MongoDB (Mongoose) · Swagger · Vitest · oxlint · Prettier · OpenSpec
 
+**Versión actual:** 0.2.0 · Cambios en [`CHANGELOG.md`](CHANGELOG.md) · Versionado con SemVer Simplificado (ver la spec `git-workflow`).
+
 ## Requisitos
 
 Solo **Docker** y **Docker Compose** (Docker Desktop en Windows/macOS). No hace falta instalar Node.js ni MongoDB.
@@ -26,6 +28,10 @@ docker compose up --build
 ### Primer usuario
 
 No hay registro público: las cuentas las crea un admin desde la gestión de usuarios. Al arrancar con la base vacía, la API crea un admin con `ADMIN_EMAIL` y `ADMIN_PASSWORD` del `.env` (en desarrollo `admin@minhogloss.local` / `MinhoGloss2026`). Si ya hay usuarios no toca nada. En producción define esas variables solo para el primer arranque y cambia la contraseña desde el perfil.
+
+### Catálogo de servicios inicial
+
+`docker compose exec api npm run seed:catalogo` carga los servicios (ASPIRAÇÃO, EXPRESS GLOSS, FULL GLOSS, PREMIUM GLOSS, EXTERIOR GLOSS) y los extras actuales del negocio con sus precios por tipo de vehículo. Solo actúa si el catálogo está vacío; después el admin lo mantiene desde la app (Ajustes → Servicios y extras). Sirve también para el primer despliegue.
 
 ### Correos (recuperación de contraseña)
 
@@ -65,6 +71,8 @@ src/
     auth/            # login, sesión, cambio y recuperación de contraseña
     usuarios/        # cuentas del negocio (solo admin)
     clientes/        # clientes del autolavado
+    tipos-servicio/  # catálogo de servicios y extras con precios por vehículo
+  seeds/             # cargas iniciales (npm run seed:catalogo)
 test/                # pruebas e2e
 openspec/            # especificaciones (SDD)
   specs/             # comportamiento vigente

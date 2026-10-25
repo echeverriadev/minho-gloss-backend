@@ -1,6 +1,6 @@
 {
   "name": "minho-gloss-backend",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "API de gestión del autolavado Minho Gloss",
   "private": true,
   "license": "UNLICENSED",
@@ -12,6 +12,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug 0.0.0.0:9229 --watch",
     "start:prod": "node dist/main",
+    "seed:catalogo": "nest build && node dist/seeds/catalogo-inicial.js",
     "lint": "oxlint --type-aware --deny-warnings --report-unused-disable-directives",
     "test": "vitest run",
     "test:watch": "vitest",

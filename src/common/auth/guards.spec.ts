@@ -10,7 +10,13 @@ import {
 import { RolesGuard } from './roles.guard.js';
 import type { SesionLookup, UsuarioSesion } from './usuario-sesion.js';
 
-const USUARIO: UsuarioSesion = { id: '1', nombre: 'Ana', email: 'ana@x.pt', rol: 'empleado' };
+const USUARIO: UsuarioSesion = {
+  id: '1',
+  nombre: 'Ana',
+  email: 'ana@x.pt',
+  rol: 'empleado',
+  preferencias: { idioma: 'es', tema: 'claro' },
+};
 
 function contexto(request: Record<string, unknown>): ExecutionContext {
   return {
