@@ -1,5 +1,5 @@
 import { ConflictException, NotFoundException } from '@nestjs/common';
-import type { Model } from 'mongoose';
+import type { Connection, Model } from 'mongoose';
 import { nuevoId, query } from '../../../test/utils/mock-query.js';
 import type { UsuarioSesion } from '../../common/auth/usuario-sesion.js';
 import { ClientesService, filtroBusqueda, MENSAJE_YA_ANONIMIZADO } from './clientes.service.js';
@@ -63,8 +63,14 @@ function crearModelo() {
   };
 }
 
+const atenciones = { updateMany: vi.fn(() => Promise.resolve({ modifiedCount: 0 })) };
+const connection = { collection: vi.fn(() => atenciones) };
+
 function crearServicio(modelo: ReturnType<typeof crearModelo>) {
-  return new ClientesService(modelo as unknown as Model<Cliente>);
+  return new ClientesService(
+    modelo as unknown as Model<Cliente>,
+    connection as unknown as Connection,
+  );
 }
 
 describe('ClientesService', () => {
@@ -176,6 +182,11 @@ describe('ClientesService', () => {
     });
     expect(Object.keys(cambios.$unset).toSorted()).toEqual(
       ['cedula', 'direccion', 'email', 'fechaNacimiento', 'notas', 'telefono'].toSorted(),
+    );
+    expect(connection.collection).toHaveBeenCalledWith('atenciones');
+    expect(atenciones.updateMany).toHaveBeenCalledWith(
+      { clienteId: cliente._id },
+      { $set: { placa: null } },
     );
   });
 

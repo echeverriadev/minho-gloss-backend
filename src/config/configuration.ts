@@ -30,6 +30,8 @@ export interface AppConfig {
   resetPasswordExpiresMinutes: number;
   mail: MailConfig;
   defaultCountryCode: string;
+  /** Zona horaria del negocio para decidir a qué día pertenece cada atención (`APP_TIMEZONE`). */
+  timeZone: string;
 }
 
 // Solo para desarrollo y pruebas: en producción se exige un JWT_SECRET propio (spec auth).
@@ -110,5 +112,6 @@ export default (): AppConfig => {
       from: process.env.MAIL_FROM ?? 'Minho Gloss <no-responder@minhogloss.local>',
     },
     defaultCountryCode: (process.env.DEFAULT_COUNTRY_CODE ?? '351').replace(/\D/g, ''),
+    timeZone: vacioComoUndefined(process.env.APP_TIMEZONE) ?? 'Europe/Lisbon',
   };
 };
