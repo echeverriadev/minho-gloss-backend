@@ -6,7 +6,8 @@ import {
   HttpStatus,
   Logger,
 } from '@nestjs/common';
-import type { Response } from 'express';
+import type { Request, Response } from 'express';
+import { prefierePortugues, traducirPt } from '../i18n/mensajes-pt.js';
 
 interface ErrorBody {
   statusCode: number;
@@ -40,8 +41,14 @@ export class HttpExceptionFilter implements ExceptionFilter {
   private readonly logger = new Logger(HttpExceptionFilter.name);
 
   catch(exception: unknown, host: ArgumentsHost): void {
-    const response = host.switchToHttp().getResponse<Response>();
+    const http = host.switchToHttp();
+    const response = http.getResponse<Response>();
     const body = this.toBody(exception);
+    if (prefierePortugues(http.getRequest<Request | undefined>()?.headers['accept-language'])) {
+      body.message = Array.isArray(body.message)
+        ? body.message.map((mensaje) => traducirPt(mensaje))
+        : traducirPt(body.message);
+    }
     response.status(body.statusCode).json(body);
   }
 

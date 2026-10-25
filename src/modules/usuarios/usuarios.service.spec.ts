@@ -57,6 +57,7 @@ function sesionDe(usuario: UsuarioLean): UsuarioSesion {
     nombre: usuario.nombre,
     email: usuario.email,
     rol: usuario.rol,
+    preferencias: { idioma: 'es', tema: 'claro' },
   };
 }
 

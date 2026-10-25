@@ -1,4 +1,13 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -13,9 +22,11 @@ import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
 import { Public } from '../../common/auth/public.decorator.js';
 import { UsuarioActual } from '../../common/auth/usuario-actual.decorator.js';
 import type { UsuarioSesion } from '../../common/auth/usuario-sesion.js';
+import { UsuariosService } from '../usuarios/usuarios.service.js';
 import { AuthService } from './auth.service.js';
 import { CambiarPasswordDto } from './dto/cambiar-password.dto.js';
 import { LoginDto, LoginResponseDto } from './dto/login.dto.js';
+import { PreferenciasDto, UpdatePreferenciasDto } from './dto/preferencias.dto.js';
 import { RecuperarPasswordDto, RestablecerPasswordDto } from './dto/recuperar-password.dto.js';
 import { UsuarioSesionDto } from './dto/usuario-sesion.dto.js';
 
@@ -24,7 +35,10 @@ const UN_MINUTO = 60_000;
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly usuariosService: UsuariosService,
+  ) {}
 
   @Public()
   @Post('login')
@@ -47,6 +61,19 @@ export class AuthController {
   @ApiUnauthorizedResponse({ description: 'Sin sesión o sesión vencida' })
   me(@UsuarioActual() usuario: UsuarioSesion): UsuarioSesionDto {
     return usuario;
+  }
+
+  @Patch('preferencias')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Cambiar el idioma y el tema propios' })
+  @ApiOkResponse({ type: PreferenciasDto })
+  @ApiBadRequestResponse({ description: 'Idioma o tema inválidos' })
+  @ApiUnauthorizedResponse({ description: 'Sin sesión o sesión vencida' })
+  updatePreferencias(
+    @UsuarioActual() usuario: UsuarioSesion,
+    @Body() dto: UpdatePreferenciasDto,
+  ): Promise<PreferenciasDto> {
+    return this.usuariosService.updatePreferencias(usuario.id, dto);
   }
 
   @Post('cambiar-password')

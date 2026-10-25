@@ -1,11 +1,14 @@
 import { type ArgumentsHost, ConflictException, Logger, NotFoundException } from '@nestjs/common';
 import { HttpExceptionFilter } from './http-exception.filter.js';
 
-function capturar(exception: unknown) {
+function capturar(exception: unknown, acceptLanguage?: string) {
   const json = vi.fn((_body: unknown) => undefined);
   const status = vi.fn((_codigo: number) => ({ json }));
   const host = {
-    switchToHttp: () => ({ getResponse: () => ({ status }) }),
+    switchToHttp: () => ({
+      getResponse: () => ({ status }),
+      getRequest: () => ({ headers: { 'accept-language': acceptLanguage } }),
+    }),
   } as unknown as ArgumentsHost;
   new HttpExceptionFilter().catch(exception, host);
   return { status: status.mock.calls[0]?.[0] as unknown, body: json.mock.calls[0]?.[0] };
@@ -41,6 +44,12 @@ describe('HttpExceptionFilter', () => {
         error: 'Internal Server Error',
         message: 'Error interno del servidor',
       },
+    });
+  });
+
+  it('traduce el mensaje al portugués si se pide', () => {
+    expect(capturar(new NotFoundException('Cliente no encontrado'), 'pt-PT').body).toMatchObject({
+      message: 'Cliente não encontrado',
     });
   });
 

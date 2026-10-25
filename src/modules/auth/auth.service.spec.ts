@@ -30,6 +30,7 @@ async function usuarioConPassword(password: string, datos: Record<string, unknow
     rol: 'empleado' as const,
     activo: true,
     passwordHash: await hash(password, 4),
+    preferencias: { idioma: 'es' as const, tema: 'claro' as const },
     ...datos,
   };
 }
@@ -66,7 +67,13 @@ describe('AuthService', () => {
       expect(respuesta).toEqual({
         accessToken: 'token-firmado',
         expiresIn: 43_200,
-        usuario: { id: usuario.id, nombre: 'Ana Silva', email: usuario.email, rol: 'empleado' },
+        usuario: {
+          id: usuario.id,
+          nombre: 'Ana Silva',
+          email: usuario.email,
+          rol: 'empleado',
+          preferencias: { idioma: 'es', tema: 'claro' },
+        },
       });
       expect(jwt.signAsync).toHaveBeenCalledWith({
         sub: usuario.id,

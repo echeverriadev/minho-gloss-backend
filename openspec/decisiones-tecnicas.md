@@ -30,6 +30,8 @@ Fases del roadmap: 0 entorno · 1 specs y convenciones · 2 backend · 3 fronten
 | D18 | Cliente con nombre, apellido, cédula (texto libre normalizado, única), teléfono celular, correo, dirección y fecha de nacimiento (`YYYY-MM-DD`); los vehículos pasan al cambio `add-vehiculos` | Datos pedidos por el dueño en la fase 2; la cédula libre sirve para NIF, Cartão de Cidadão o documentos extranjeros | 2 |
 | D19 | Pruebas del backend compiladas con SWC (`unplugin-swc`) y e2e contra un MongoDB real (servicio en la CI) | esbuild no emite la metadata de decoradores que necesitan NestJS y Mongoose; probar contra Mongo real evita simular índices y consultas | 2 |
 | D20 | Tipos de vehículo `ligeiro`, `suv`, `monovolume` y `carrinha`; catálogo único de servicios y extras (`categoria`) con cuatro precios por vehículo o precio único | Son los medios de transporte y la lista de precios reales del negocio; en los extras con dos precios se asume primero Ligeiro/SUV y luego Monovolume/Carrinha hasta que el dueño lo confirme | 2 |
+| D21 | Idioma por usuario: español o portugués de Portugal (`pt-PT`). Diccionarios tipados propios en el frontend (sin librería de i18n) y traducción de los mensajes de la API según `Accept-Language` | Pedido del dueño; con dos idiomas un objeto tipado detecta en el build cualquier texto sin traducir y no suma dependencias. Adopta la sugerencia S13 | 2 |
+| D22 | Tema claro u oscuro por usuario, con modo oscuro hecho redefiniendo los colores del tema de Tailwind bajo la clase `dark` | Cambia todas las pantallas sin repetir `dark:` en cada componente | 2 |
 
 ## Sugerencias pendientes
 
@@ -47,7 +49,6 @@ Fases del roadmap: 0 entorno · 1 specs y convenciones · 2 backend · 3 fronten
 | S10 | Instalar la app como PWA (manifest e ícono) para abrirla como una app en el celular | Uso diario desde el celular del patio | Gratis | 3 |
 | S11 | Protección de ramas en GitHub para `main` y `develop` (pull request obligatorio y CI en verde) | `git-workflow` lo exige; se configura a mano en GitHub | Gratis | 1 |
 | S12 | Exportar clientes y servicios a CSV desde la app | El dueño puede querer llevarse sus datos a una hoja de cálculo | Gratis | después de la v1 |
-| S13 | Traducir la interfaz al portugués (`pt-PT`) además del español | El negocio está en Braga y puede tener empleados o clientes que prefieran portugués | Gratis; requiere extraer los textos a archivos de traducción | después de la v1 |
 
 ## Sugerencias descartadas
 
