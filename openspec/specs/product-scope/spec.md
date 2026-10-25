@@ -63,8 +63,9 @@ La app SHALL estar en español. El negocio está en Braga (Portugal), por lo que
 ### Requirement: Glosario
 Las specs, el código y la interfaz SHALL usar estos términos de forma consistente:
 - **Cliente**: persona dueña de uno o varios vehículos que usa el autolavado.
-- **Vehículo**: auto, camioneta o moto de un cliente, identificado por su placa.
-- **Tipo de servicio**: servicio que ofrece el negocio (por ejemplo lavado sencillo o lavado con encerado), con su precio.
+- **Vehículo**: Ligeiro, SUV, Monovolume o Carrinha de un cliente, identificado por su placa.
+- **Tipo de servicio**: entrada del catálogo que ofrece el negocio (por ejemplo EXPRESS GLOSS), con su precio según el tipo de vehículo.
+- **Extra**: tipo de servicio adicional que se suma a un servicio (por ejemplo Higienização com ozono).
 - **Servicio prestado**: un servicio realizado a un vehículo en una fecha y hora, con el precio cobrado.
 - **Recordatorio**: contacto de post-venta programado para un cliente.
 - **Usuario**: persona del negocio que inicia sesión en la app (admin o empleado).

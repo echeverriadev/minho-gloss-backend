@@ -29,6 +29,7 @@ Fases del roadmap: 0 entorno · 1 specs y convenciones · 2 backend · 3 fronten
 | D17 | Correo por SMTP con `nodemailer`; en desarrollo **Mailpit** en Docker Compose (http://localhost:8025) y en producción un proveedor gratuito por SMTP (Resend, Brevo o Gmail) | SMTP sirve con cualquier proveedor sin atar el código a un SDK; Mailpit permite probar sin enviar correos reales. Concreta la sugerencia S5 | 2 |
 | D18 | Cliente con nombre, apellido, cédula (texto libre normalizado, única), teléfono celular, correo, dirección y fecha de nacimiento (`YYYY-MM-DD`); los vehículos pasan al cambio `add-vehiculos` | Datos pedidos por el dueño en la fase 2; la cédula libre sirve para NIF, Cartão de Cidadão o documentos extranjeros | 2 |
 | D19 | Pruebas del backend compiladas con SWC (`unplugin-swc`) y e2e contra un MongoDB real (servicio en la CI) | esbuild no emite la metadata de decoradores que necesitan NestJS y Mongoose; probar contra Mongo real evita simular índices y consultas | 2 |
+| D20 | Tipos de vehículo `ligeiro`, `suv`, `monovolume` y `carrinha`; catálogo único de servicios y extras (`categoria`) con cuatro precios por vehículo o precio único | Son los medios de transporte y la lista de precios reales del negocio; en los extras con dos precios se asume primero Ligeiro/SUV y luego Monovolume/Carrinha hasta que el dueño lo confirme | 2 |
 
 ## Sugerencias pendientes
 

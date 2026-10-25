@@ -9,7 +9,7 @@ Vehículos de los clientes del autolavado, identificados por su placa, para regi
 La API SHALL exponer `POST /api/clientes/:id/vehiculos` con `{ placa, tipo, marca?, modelo?, color? }`, que crea un vehículo activo para ese cliente con la placa normalizada y responde 201. Una placa ya usada por otro vehículo activo SHALL responder 409 con el nombre e `id` del cliente actual.
 
 #### Scenario: Segundo vehículo del cliente
-- **WHEN** se agrega una moto a un cliente que ya tiene un auto
+- **WHEN** se agrega una carrinha a un cliente que ya tiene un ligeiro
 - **THEN** el cliente queda con dos vehículos activos
 
 #### Scenario: Placa de otro cliente

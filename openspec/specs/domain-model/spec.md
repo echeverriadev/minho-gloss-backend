@@ -71,7 +71,7 @@ Un `Vehiculo` SHALL pertenecer a exactamente un cliente y tener:
 | --- | --- | --- |
 | `clienteId` | referencia a Cliente | obligatorio |
 | `placa` | texto | obligatorio; se normaliza a mayúsculas sin espacios ni guiones (`aa-12-bb` → `AA12BB`); única entre vehículos activos |
-| `tipo` | `auto` \| `camioneta` \| `moto` \| `otro` | obligatorio |
+| `tipo` | `ligeiro` \| `suv` \| `monovolume` \| `carrinha` | obligatorio; en la interfaz se muestra como Ligeiro, SUV, Monovolume y Carrinha |
 | `marca` | texto | opcional, hasta 40 caracteres |
 | `modelo` | texto | opcional, hasta 40 caracteres |
 | `color` | texto | opcional, hasta 30 caracteres |
@@ -84,23 +84,28 @@ Un cliente SHALL poder tener cero o más vehículos.
 - **THEN** la operación se rechaza indicando el cliente actual del vehículo
 
 ### Requirement: Entidad TipoServicio
-Un `TipoServicio` SHALL tener:
+Un `TipoServicio` es una entrada del catálogo (un servicio o un extra) y SHALL tener:
 
 | Campo | Tipo | Reglas |
 | --- | --- | --- |
-| `nombre` | texto | obligatorio, único entre tipos activos, 2 a 60 caracteres |
+| `nombre` | texto | obligatorio, el título del servicio; único entre entradas activas sin distinguir mayúsculas; 2 a 60 caracteres |
 | `descripcion` | texto | opcional, hasta 300 caracteres |
-| `precioBase` | entero | obligatorio, mayor o igual a 0 |
-| `preciosPorVehiculo` | objeto | opcional; precio específico por tipo de vehículo, por ejemplo `{ "camioneta": 2000, "moto": 1000 }` (en céntimos) |
-| `duracionMinutos` | entero | opcional, estimado, entre 5 y 600 |
-| `orden` | entero | opcional, por defecto 0; posición en la que se muestra en la app |
+| `categoria` | `servicio` \| `extra` | obligatorio; los extras se suman a un servicio |
+| `modoPrecio` | `por-vehiculo` \| `unico` | obligatorio |
+| `precios` | objeto | obligatorio si `modoPrecio` es `por-vehiculo`: `{ ligeiro, suv, monovolume, carrinha }`, enteros en céntimos mayores o iguales a 0 |
+| `precioUnico` | entero | obligatorio si `modoPrecio` es `unico`, en céntimos, mayor o igual a 0 |
+| `orden` | entero | opcional, por defecto 0; posición dentro de su categoría |
 | `activo` | booleano | por defecto `true` |
 
-El precio de lista de un servicio para un vehículo SHALL ser el de `preciosPorVehiculo` para su tipo si existe, y si no `precioBase`.
+El precio de lista de una entrada para un vehículo SHALL ser `precioUnico` si el modo es `unico`, o el de `precios` para el tipo del vehículo si es `por-vehiculo`.
 
 #### Scenario: Precio por tipo de vehículo
-- **WHEN** el tipo "Lavado sencillo" tiene `precioBase` 1500 (15,00 €) y `preciosPorVehiculo.camioneta` 2000 (20,00 €)
-- **THEN** su precio de lista es 2000 para una camioneta y 1500 para un auto
+- **WHEN** "FULL GLOSS" tiene precios 2500, 3000, 3500 y 4000 (Ligeiro, SUV, Monovolume, Carrinha)
+- **THEN** su precio de lista es 3500 para un Monovolume y 2500 para un Ligeiro
+
+#### Scenario: Extra de precio único
+- **WHEN** el extra "Lavagem do motor" tiene `precioUnico` 4000
+- **THEN** su precio de lista es 4000 para cualquier vehículo
 
 ### Requirement: Entidad ServicioPrestado
 Un `ServicioPrestado` SHALL tener:

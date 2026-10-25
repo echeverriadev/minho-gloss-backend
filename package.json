@@ -12,6 +12,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug 0.0.0.0:9229 --watch",
     "start:prod": "node dist/main",
+    "seed:catalogo": "nest build && node dist/seeds/catalogo-inicial.js",
     "lint": "oxlint --type-aware --deny-warnings --report-unused-disable-directives",
     "test": "vitest run",
     "test:watch": "vitest",

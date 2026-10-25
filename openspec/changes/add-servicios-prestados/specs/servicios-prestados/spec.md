@@ -9,7 +9,7 @@ Registro de cada servicio realizado a un vehículo, con el precio cobrado y el m
 La API SHALL exponer `POST /api/servicios-prestados` para usuarios autenticados, con `{ vehiculoId, tipoServicioId, precioCobrado?, metodoPago, realizadoEn?, notas? }`. La API SHALL tomar el `clienteId` del vehículo, copiar `tipoServicioNombre` y calcular `precioLista` según el tipo de vehículo, usar `precioLista` cuando no se envíe `precioCobrado`, usar el momento actual cuando no se envíe `realizadoEn`, asignar `registradoPor` con el usuario de la sesión y responder 201 con el servicio creado.
 
 #### Scenario: Registro con valores por defecto
-- **WHEN** un empleado registra "Lavado sencillo" (precio de camioneta 2000) para una camioneta, pagado en efectivo, sin precio ni fecha
+- **WHEN** un empleado registra "EXPRESS GLOSS" (precio de SUV 2000) para un SUV, pagado en efectivo, sin precio ni fecha
 - **THEN** se crea un servicio con `precioLista` y `precioCobrado` 2000, `realizadoEn` el momento actual y `registradoPor` el empleado
 
 #### Scenario: Tipo de servicio inactivo

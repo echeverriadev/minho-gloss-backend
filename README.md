@@ -27,6 +27,10 @@ docker compose up --build
 
 No hay registro público: las cuentas las crea un admin desde la gestión de usuarios. Al arrancar con la base vacía, la API crea un admin con `ADMIN_EMAIL` y `ADMIN_PASSWORD` del `.env` (en desarrollo `admin@minhogloss.local` / `MinhoGloss2026`). Si ya hay usuarios no toca nada. En producción define esas variables solo para el primer arranque y cambia la contraseña desde el perfil.
 
+### Catálogo de servicios inicial
+
+`docker compose exec api npm run seed:catalogo` carga los servicios (ASPIRAÇÃO, EXPRESS GLOSS, FULL GLOSS, PREMIUM GLOSS, EXTERIOR GLOSS) y los extras actuales del negocio con sus precios por tipo de vehículo. Solo actúa si el catálogo está vacío; después el admin lo mantiene desde la app (Ajustes → Servicios y extras). Sirve también para el primer despliegue.
+
 ### Correos (recuperación de contraseña)
 
 En desarrollo todos los correos van a **Mailpit** y se ven en http://localhost:8025; nada sale a internet. En producción configura `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS` y `MAIL_FROM` con un proveedor gratuito (por ejemplo Resend por SMTP); ver `.env.example`.
@@ -65,6 +69,8 @@ src/
     auth/            # login, sesión, cambio y recuperación de contraseña
     usuarios/        # cuentas del negocio (solo admin)
     clientes/        # clientes del autolavado
+    tipos-servicio/  # catálogo de servicios y extras con precios por vehículo
+  seeds/             # cargas iniciales (npm run seed:catalogo)
 test/                # pruebas e2e
 openspec/            # especificaciones (SDD)
   specs/             # comportamiento vigente
