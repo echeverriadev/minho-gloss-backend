@@ -1,6 +1,24 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import type { HydratedDocument, Types } from 'mongoose';
 import { ROLES, type Rol } from '../../../common/auth/roles.js';
+import {
+  IDIOMAS,
+  type Idioma,
+  type Preferencias as PreferenciasUsuario,
+  TEMAS,
+  type Tema,
+} from '../../../common/preferencias/preferencias.js';
+
+@Schema({ _id: false })
+export class Preferencias implements PreferenciasUsuario {
+  @Prop({ type: String, enum: IDIOMAS, default: 'es' })
+  idioma: Idioma;
+
+  @Prop({ type: String, enum: TEMAS, default: 'claro' })
+  tema: Tema;
+}
+
+const PreferenciasSchema = SchemaFactory.createForClass(Preferencias);
 
 @Schema({ collection: 'usuarios', timestamps: true })
 export class Usuario {
@@ -19,6 +37,9 @@ export class Usuario {
 
   @Prop({ default: true })
   activo: boolean;
+
+  @Prop({ type: PreferenciasSchema, default: () => ({}) })
+  preferencias?: Preferencias;
 
   @Prop({ type: String, select: false, index: { sparse: true } })
   resetPasswordTokenHash?: string | null;

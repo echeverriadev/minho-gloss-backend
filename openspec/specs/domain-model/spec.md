@@ -27,12 +27,18 @@ Un `Usuario` SHALL tener:
 | `password` | texto | solo de entrada; mínimo 8 caracteres; se guarda únicamente su hash y nunca se devuelve |
 | `rol` | `admin` \| `empleado` | obligatorio |
 | `activo` | booleano | por defecto `true`; un usuario inactivo no puede iniciar sesión |
+| `preferencias.idioma` | `es` \| `pt-PT` | por defecto `es`; idioma en que el usuario ve la app y los mensajes de la API |
+| `preferencias.tema` | `claro` \| `oscuro` | por defecto `claro`; apariencia de la app |
 
 SHALL existir siempre al menos un usuario `admin` activo.
 
 #### Scenario: Desactivar al último admin
 - **WHEN** se intenta desactivar o cambiar de rol al único admin activo
 - **THEN** la operación se rechaza con un error de conflicto
+
+#### Scenario: Usuario que prefiere portugués
+- **WHEN** un usuario guarda `preferencias.idioma` = `pt-PT`
+- **THEN** la próxima vez que inicia sesión, en cualquier dispositivo, ve la app en portugués de Portugal
 
 ### Requirement: Entidad Cliente
 Un `Cliente` SHALL tener:

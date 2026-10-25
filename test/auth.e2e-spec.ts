@@ -182,6 +182,35 @@ describe('Auth y usuarios (e2e)', () => {
       .expect(204);
   });
 
+  it('guarda las preferencias propias y las devuelve al iniciar sesión', async () => {
+    const ana = await t.crearUsuario({ email: 'ana@minhogloss.pt' });
+
+    await http()
+      .patch('/api/auth/preferencias')
+      .set('Authorization', `Bearer ${ana.token}`)
+      .send({ tema: 'oscuro' })
+      .expect(200)
+      .expect({ idioma: 'es', tema: 'oscuro' });
+    await http()
+      .patch('/api/auth/preferencias')
+      .set('Authorization', `Bearer ${ana.token}`)
+      .send({ idioma: 'en' })
+      .expect(400)
+      .expect((res) => expect(res.body.message).toEqual(['El idioma debe ser es o pt-PT']));
+
+    const login = await http()
+      .post('/api/auth/login')
+      .send({ email: 'ana@minhogloss.pt', password: 'ClaveSegura2026' })
+      .expect(200);
+    expect(login.body.usuario.preferencias).toEqual({ idioma: 'es', tema: 'oscuro' });
+  });
+
+  it('devuelve los mensajes en portugués si se pide', async () => {
+    // Sin pasar por el login, para no gastar los intentos que mide la última prueba.
+    const res = await http().get('/api/usuarios').set('Accept-Language', 'pt-PT').expect(401);
+    expect(res.body.message).toBe('Tens de iniciar sessão');
+  });
+
   // Va al final: agota el límite de intentos de login de esta IP.
   it('responde 429 al sexto intento de login en un minuto', async () => {
     for (let intento = 0; intento < 5; intento++) {
