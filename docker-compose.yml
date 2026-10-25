@@ -11,6 +11,8 @@ services:
       PORT: 3000
       MONGO_URI: mongodb://mongo:27017/minho_gloss
       CORS_ORIGIN: http://localhost:5173
+      SMTP_HOST: mailpit
+      SMTP_PORT: 1025
       OPENSPEC_TELEMETRY: 0
     env_file:
       - path: .env
@@ -21,6 +23,8 @@ services:
     depends_on:
       mongo:
         condition: service_healthy
+      mailpit:
+        condition: service_started
 
   mongo:
     image: mongo:8
@@ -33,6 +37,13 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  # Bandeja de correo de desarrollo: recibe todo por SMTP y no envía nada a internet
+  mailpit:
+    image: axllent/mailpit:v1.27
+    ports:
+      - '8025:8025'
+      - '1025:1025'
 
 volumes:
   node_modules:

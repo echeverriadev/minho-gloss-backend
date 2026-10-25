@@ -25,6 +25,10 @@ Fases del roadmap: 0 entorno · 1 specs y convenciones · 2 backend · 3 fronten
 | D13 | WhatsApp de post-venta con enlaces `wa.me` que abre el usuario, sin API de pago | Costo cero; la API oficial de WhatsApp Business cobra por conversación | 1 |
 | D14 | Los términos del negocio en español en el código y las rutas (`/api/clientes`) | Coinciden con el lenguaje del dueño y las specs; los términos técnicos quedan en inglés | 1 |
 | D15 | Negocio en Braga (Portugal): euros en céntimos, zona `Europe/Lisbon`, prefijo `+351`, RGPD (consentimiento de contacto y derecho de supresión) e interfaz en español con formato `es-ES` | Datos confirmados por el dueño del proyecto | 1 |
+| D16 | Recuperación de contraseña por correo con token aleatorio de un solo uso (60 minutos, se guarda solo su hash) y sin registro público: las cuentas las crea el admin | Pedido del dueño en la fase 2; no revela qué correos existen y el admin sigue pudiendo restablecer a mano | 2 |
+| D17 | Correo por SMTP con `nodemailer`; en desarrollo **Mailpit** en Docker Compose (http://localhost:8025) y en producción un proveedor gratuito por SMTP (Resend, Brevo o Gmail) | SMTP sirve con cualquier proveedor sin atar el código a un SDK; Mailpit permite probar sin enviar correos reales. Concreta la sugerencia S5 | 2 |
+| D18 | Cliente con nombre, apellido, cédula (texto libre normalizado, única), teléfono celular, correo, dirección y fecha de nacimiento (`YYYY-MM-DD`); los vehículos pasan al cambio `add-vehiculos` | Datos pedidos por el dueño en la fase 2; la cédula libre sirve para NIF, Cartão de Cidadão o documentos extranjeros | 2 |
+| D19 | Pruebas del backend compiladas con SWC (`unplugin-swc`) y e2e contra un MongoDB real (servicio en la CI) | esbuild no emite la metadata de decoradores que necesitan NestJS y Mongoose; probar contra Mongo real evita simular índices y consultas | 2 |
 
 ## Sugerencias pendientes
 
@@ -34,7 +38,7 @@ Fases del roadmap: 0 entorno · 1 specs y convenciones · 2 backend · 3 fronten
 | S2 | Respaldo periódico de Mongo: `mongodump` programado con GitHub Actions hacia un almacenamiento gratuito | El plan M0 de Atlas no incluye respaldos ni restauración a un punto en el tiempo | Gratis con límites de Actions | 5 |
 | S3 | Desplegar el frontend en Cloudflare Pages (o Netlify) | Hosting estático gratuito con HTTPS | Gratis | 5 |
 | S4 | Desplegar el backend en Render, Railway, Fly.io u Oracle Cloud Always Free | Comparar: los planes gratuitos de Render duermen el servicio; Oracle Always Free no duerme pero requiere administrar una VM | Gratis o pocos dólares | 5 |
-| S5 | Correo transaccional con el plan gratuito de Resend (alternativas: Brevo, Gmail SMTP con contraseña de aplicación) | Envío de recordatorios de post-venta | Gratis dentro de los límites diarios | 4 |
+| S5 | Correo transaccional con el plan gratuito de Resend (alternativas: Brevo, Gmail SMTP con contraseña de aplicación) | Envío de recordatorios de post-venta; el envío por SMTP ya existe (D17), falta elegir el proveedor de producción | Gratis dentro de los límites diarios | 4 y 5 |
 | S6 | Revisar los títulos de los pull requests con Conventional Commits en la CI | Refuerza `git-workflow` sin hooks locales | Gratis | 2 |
 | S7 | Dependabot o Renovate para actualizar dependencias | Mantiene seguras las dependencias con poco esfuerzo | Gratis | 2 |
 | S8 | Pruebas de componentes con Vitest + Testing Library y pruebas de Storybook (`@storybook/addon-vitest`) en el frontend | Hoy el frontend solo tiene lint, tipos y build | Gratis | 3 |

@@ -11,7 +11,7 @@ Solo **Docker** y **Docker Compose** (Docker Desktop en Windows/macOS). No hace 
 ## Levantar el entorno
 
 ```bash
-cp .env.example .env        # opcional, los valores por defecto ya funcionan
+cp .env.example .env        # crea el admin inicial y apunta el correo a Mailpit
 docker compose up --build
 ```
 
@@ -21,6 +21,15 @@ docker compose up --build
 | Salud de la API            | http://localhost:3000/api/health        |
 | Swagger                    | http://localhost:3000/api/docs          |
 | MongoDB (Compass, mongosh) | `mongodb://localhost:27017/minho_gloss` |
+| Correos de desarrollo      | http://localhost:8025 (Mailpit)         |
+
+### Primer usuario
+
+No hay registro público: las cuentas las crea un admin desde la gestión de usuarios. Al arrancar con la base vacía, la API crea un admin con `ADMIN_EMAIL` y `ADMIN_PASSWORD` del `.env` (en desarrollo `admin@minhogloss.local` / `MinhoGloss2026`). Si ya hay usuarios no toca nada. En producción define esas variables solo para el primer arranque y cambia la contraseña desde el perfil.
+
+### Correos (recuperación de contraseña)
+
+En desarrollo todos los correos van a **Mailpit** y se ven en http://localhost:8025; nada sale a internet. En producción configura `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS` y `MAIL_FROM` con un proveedor gratuito (por ejemplo Resend por SMTP); ver `.env.example`.
 
 Detener: `docker compose down` (los datos de Mongo se conservan). Borrar todo, datos incluidos: `docker compose down -v`.
 
@@ -52,7 +61,10 @@ src/
   config/            # lectura de variables de entorno
   common/            # guards, filtros, interceptores y decoradores compartidos
   modules/           # un módulo por dominio de negocio
-    health/          # GET /api/health
+    health/          # GET /api/health (público)
+    auth/            # login, sesión, cambio y recuperación de contraseña
+    usuarios/        # cuentas del negocio (solo admin)
+    clientes/        # clientes del autolavado
 test/                # pruebas e2e
 openspec/            # especificaciones (SDD)
   specs/             # comportamiento vigente
