@@ -12,18 +12,20 @@ Mapa de las especificaciones del backend. Las reglas de cómo se usan están en 
 | [`project-conventions`](specs/project-conventions/spec.md) | SDD con OpenSpec, organización de specs, idioma, costo mínimo, decisiones técnicas, definición de terminado | Sí |
 | [`code-style`](specs/code-style/spec.md) | Prettier, oxlint, TypeScript, nombres de archivos y código, errores, pruebas, `npm run check` y CI | No |
 | [`api-architecture`](specs/api-architecture/spec.md) | Módulos, capas, rutas REST, paginación, formato de datos y errores, seguridad, Swagger, configuración | No |
-| [`dev-environment`](specs/dev-environment/spec.md) | Docker Compose, recarga en caliente, variables de entorno, imagen de producción | No |
+| [`dev-environment`](specs/dev-environment/spec.md) | Docker Compose, recarga en caliente, variables de entorno, Mailpit, admin inicial, imagen de producción | No |
+| [`auth`](specs/auth/spec.md) | Login con JWT, recuperación de contraseña por correo, sin registro público, protección por defecto y roles | No |
+| [`usuarios`](specs/usuarios/spec.md) | Gestión de cuentas por el admin, regla de al menos un admin activo | No |
+| [`clientes`](specs/clientes/spec.md) | Alta, búsqueda (nombre, apellido, cédula, teléfono), ficha, edición, baja y anonimización RGPD | No |
 
 Decisiones técnicas y sugerencias pendientes: [`decisiones-tecnicas.md`](decisiones-tecnicas.md) (compartido con el frontend).
 
 ## Cambios pendientes (`changes/`)
 
-Orden sugerido de implementación en la fase 2 del roadmap (cada uno depende de los anteriores):
+Ya implementados y archivados en `changes/archive/`: `add-auth` y `add-clientes`. Orden sugerido para el resto (cada uno depende de los anteriores):
 
 | # | Cambio | Capacidades nuevas | Resumen |
 | --- | --- | --- | --- |
-| 1 | [`add-auth`](changes/add-auth/proposal.md) | `auth`, `usuarios` | Login con JWT, protección por defecto, roles `admin`/`empleado`, gestión de usuarios y primer admin |
-| 2 | [`add-clientes`](changes/add-clientes/proposal.md) | `clientes`, `vehiculos` | CRUD de clientes y vehículos, búsqueda por nombre/teléfono/placa, normalización y duplicados |
+| 2b | [`add-vehiculos`](changes/add-vehiculos/proposal.md) | `vehiculos` | Vehículos de cada cliente, búsqueda por placa, normalización y duplicados |
 | 3 | [`add-catalogo-servicios`](changes/add-catalogo-servicios/proposal.md) | `tipos-servicio` | Tipos de servicio con precio base y por tipo de vehículo |
 | 4 | [`add-servicios-prestados`](changes/add-servicios-prestados/proposal.md) | `servicios-prestados` | Registro rápido, listado del día con totales, anulación y contadores del cliente |
 | 5 | [`add-metricas`](changes/add-metricas/proposal.md) | `metricas` | Resumen por rango, serie diaria, clientes nuevos/recurrentes e inactivos |
@@ -36,12 +38,12 @@ Todas las rutas cuelgan de `/api` y requieren sesión salvo las marcadas como p�
 | Método y ruta | Rol | Cambio |
 | --- | --- | --- |
 | `GET /health` | público | vigente |
-| `POST /auth/login` | público | `add-auth` |
-| `GET /auth/me` · `POST /auth/cambiar-password` | cualquiera | `add-auth` |
+| `POST /auth/login` · `POST /auth/recuperar-password` · `POST /auth/restablecer-password` | público | vigente |
+| `GET /auth/me` · `POST /auth/cambiar-password` | cualquiera | vigente |
 | `GET·POST /usuarios` · `PATCH·DELETE /usuarios/:id` · `POST /usuarios/:id/restablecer-password` | admin | `add-auth` |
-| `GET·POST /clientes` · `GET·PATCH /clientes/:id` | cualquiera | `add-clientes` |
-| `DELETE /clientes/:id` · `POST /clientes/:id/anonimizar` (RGPD) | admin | `add-clientes` |
-| `POST /clientes/:id/vehiculos` · `GET /vehiculos/por-placa/:placa` · `PATCH·DELETE /vehiculos/:id` | cualquiera | `add-clientes` |
+| `GET·POST /clientes` · `GET·PATCH /clientes/:id` | cualquiera | vigente |
+| `DELETE /clientes/:id` · `POST /clientes/:id/anonimizar` (RGPD) | admin | vigente |
+| `POST /clientes/:id/vehiculos` · `GET /vehiculos/por-placa/:placa` · `PATCH·DELETE /vehiculos/:id` | cualquiera | `add-vehiculos` |
 | `GET /tipos-servicio` · `GET /tipos-servicio/:id/precio` | cualquiera | `add-catalogo-servicios` |
 | `POST /tipos-servicio` · `PATCH·DELETE /tipos-servicio/:id` | admin | `add-catalogo-servicios` |
 | `GET·POST /servicios-prestados` · `GET·PATCH /servicios-prestados/:id` | cualquiera (con reglas por fecha) | `add-servicios-prestados` |
@@ -54,9 +56,9 @@ Todas las rutas cuelgan de `/api` y requieren sesión salvo las marcadas como p�
 
 ```bash
 docker compose exec api npx openspec list                 # cambios en curso
-docker compose exec api npx openspec show add-clientes    # ver un cambio
+docker compose exec api npx openspec show add-vehiculos    # ver un cambio
 docker compose exec api npm run specs:validate            # validar specs y cambios
-docker compose exec api npx openspec archive add-clientes # al integrar el PR
+docker compose exec api npx openspec archive add-vehiculos # al integrar el PR
 ```
 
 Con Claude Code: `/opsx:propose`, `/opsx:apply <cambio>`, `/opsx:archive <cambio>`.

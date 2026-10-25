@@ -1,37 +1,21 @@
-import type { INestApplication } from '@nestjs/common';
-import { getConnectionToken } from '@nestjs/mongoose';
-import { Test } from '@nestjs/testing';
-import mongoose from 'mongoose';
 import request from 'supertest';
-import { HealthController } from '../src/modules/health/health.controller.js';
+import { crearAppDePrueba, type AppDePrueba } from './utils/crear-app.js';
 
 describe('Health (e2e)', () => {
-  let app: INestApplication;
+  let t: AppDePrueba;
 
-  beforeEach(async () => {
-    const moduleRef = await Test.createTestingModule({
-      controllers: [HealthController],
-      providers: [
-        {
-          provide: getConnectionToken(),
-          useValue: { readyState: mongoose.ConnectionStates.connected },
-        },
-      ],
-    }).compile();
-
-    app = moduleRef.createNestApplication();
-    app.setGlobalPrefix('api');
-    await app.init();
+  beforeAll(async () => {
+    t = await crearAppDePrueba();
   });
 
-  it('GET /api/health', () => {
-    return request(app.getHttpServer())
+  afterAll(async () => {
+    await t.cerrar();
+  });
+
+  it('GET /api/health es público', () => {
+    return request(t.app.getHttpServer())
       .get('/api/health')
       .expect(200)
       .expect({ status: 'ok', database: 'up' });
-  });
-
-  afterEach(async () => {
-    await app.close();
   });
 });

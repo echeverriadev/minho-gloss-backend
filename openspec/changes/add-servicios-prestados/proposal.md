@@ -26,4 +26,4 @@ Fuera de alcance: varios servicios en un solo registro (se registran uno por uno
 - Código nuevo: `src/modules/servicios-prestados/`.
 - Usa `ClientesService`, `VehiculosService` y `TiposServicioService` exportados por sus módulos.
 - Índices en `realizadoEn`, `clienteId` y `estado` para las consultas por día y las métricas.
-- Depende de `add-auth`, `add-clientes` y `add-catalogo-servicios`. Lo usan `add-metricas` y `add-post-venta`.
+- Depende de `add-auth`, `add-clientes`, `add-vehiculos` y `add-catalogo-servicios`. Lo usan `add-metricas` y `add-post-venta`.
