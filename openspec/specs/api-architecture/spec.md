@@ -68,11 +68,19 @@ Toda respuesta de error SHALL tener la forma `{ "statusCode": <n>, "error": "<no
 - **THEN** la API responde 500 con `message: "Error interno del servidor"` y el detalle queda solo en el log
 
 ### Requirement: Seguridad por defecto
-Todos los endpoints SHALL requerir un usuario autenticado salvo los marcados explícitamente como públicos (`GET /api/health`, `POST /api/auth/login`). Los endpoints exclusivos del rol `admin` SHALL declararlo explícitamente y responder 403 a otros roles. La API SHALL permitir CORS solo desde `CORS_ORIGIN` y SHALL NOT registrar contraseñas ni tokens.
+Todos los endpoints SHALL requerir un usuario autenticado salvo los marcados explícitamente como públicos (`GET /api/health`, `POST /api/auth/login`). Los endpoints exclusivos del rol `admin` SHALL declararlo explícitamente y responder 403 a otros roles. La API SHALL permitir CORS solo desde los orígenes de `CORS_ORIGIN` (separados por comas) y, fuera de producción, también desde `localhost`, `127.0.0.1` y las IP de redes locales, para probar desde la computadora o el celular y SHALL NOT registrar contraseñas ni tokens.
 
 #### Scenario: Endpoint nuevo sin decorador
 - **WHEN** se agrega un endpoint sin marcarlo como público
 - **THEN** responde 401 a peticiones sin token
+
+#### Scenario: App abierta desde 127.0.0.1 en desarrollo
+- **WHEN** en desarrollo la app abierta en http://127.0.0.1:5173 llama a la API
+- **THEN** la API responde con `Access-Control-Allow-Origin: http://127.0.0.1:5173`
+
+#### Scenario: Origen desconocido en producción
+- **WHEN** en producción una página de otro dominio llama a la API
+- **THEN** el navegador bloquea la respuesta porque el origen no está en `CORS_ORIGIN`
 
 ### Requirement: Documentación con Swagger
 Cada endpoint SHALL documentarse con los decoradores de `@nestjs/swagger`: `@ApiTags` por módulo, `@ApiOperation` con un resumen en español, las respuestas posibles (`@ApiOkResponse`, `@ApiCreatedResponse`, errores 400/401/403/404/409 que apliquen), `@ApiBearerAuth` en los protegidos y `@ApiProperty` con ejemplo en cada campo de los DTOs. La documentación SHALL publicarse en `/api/docs` y su JSON en `/api/docs-json`.

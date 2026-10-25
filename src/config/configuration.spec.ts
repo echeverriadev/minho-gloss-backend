@@ -1,4 +1,4 @@
-import configuration, { parseDuracion } from './configuration.js';
+import configuration, { isOrigenPermitido, parseDuracion } from './configuration.js';
 
 describe('parseDuracion', () => {
   it('convierte horas, minutos y segundos', () => {
@@ -33,5 +33,29 @@ describe('configuration', () => {
     vi.stubEnv('NODE_ENV', 'development');
     vi.stubEnv('JWT_SECRET', '');
     expect(configuration().jwt.secret.length).toBeGreaterThanOrEqual(32);
+  });
+});
+
+describe('isOrigenPermitido', () => {
+  const corsOrigins = ['https://app.minhogloss.pt'];
+
+  it('permite los orígenes de CORS_ORIGIN', () => {
+    expect(
+      isOrigenPermitido('https://app.minhogloss.pt', { corsOrigins, nodeEnv: 'production' }),
+    ).toBe(true);
+  });
+
+  it('en desarrollo permite localhost, 127.0.0.1 y la red local', () => {
+    const config = { corsOrigins, nodeEnv: 'development' };
+    expect(isOrigenPermitido('http://127.0.0.1:5173', config)).toBe(true);
+    expect(isOrigenPermitido('http://localhost:5173', config)).toBe(true);
+    expect(isOrigenPermitido('http://192.168.1.20:5173', config)).toBe(true);
+    expect(isOrigenPermitido('https://otro-sitio.com', config)).toBe(false);
+  });
+
+  it('en producción no permite orígenes locales', () => {
+    expect(isOrigenPermitido('http://127.0.0.1:5173', { corsOrigins, nodeEnv: 'production' })).toBe(
+      false,
+    );
   });
 });
