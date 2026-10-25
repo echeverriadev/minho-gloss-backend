@@ -1,7 +1,8 @@
 import { Controller, Get } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
-import { ApiOkResponse, ApiProperty, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiProperty, ApiTags } from '@nestjs/swagger';
 import mongoose, { type Connection } from 'mongoose';
+import { Public } from '../../common/auth/public.decorator.js';
 
 export class HealthResponseDto {
   @ApiProperty({ example: 'ok' })
@@ -16,7 +17,9 @@ export class HealthResponseDto {
 export class HealthController {
   constructor(@InjectConnection() private readonly connection: Connection) {}
 
+  @Public()
   @Get()
+  @ApiOperation({ summary: 'Estado de la API y de la base de datos' })
   @ApiOkResponse({ type: HealthResponseDto })
   check(): HealthResponseDto {
     const isConnected = this.connection.readyState === mongoose.ConnectionStates.connected;
