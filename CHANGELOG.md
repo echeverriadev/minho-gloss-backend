@@ -22,6 +22,11 @@ Fase 3 del roadmap: la operación diaria del autolavado. Cada visita se registra
 
 - Borrar los datos personales de un cliente (RGPD) también vacía la placa de sus atenciones.
 
+### Despliegue
+
+- **API en Vercel:** se publica como una Vercel Function en la región Frankfurt (`fra1`, en `vercel.json`) y cada push a `main` despliega producción. El README documenta las variables de entorno de producción.
+- **MongoDB Atlas desde Vercel:** la API acepta `MONGODB_URI` y `MONGO_DB_NAME`, que crea la integración de Atlas en Vercel, además de `MONGO_URI`.
+
 ### Corregido
 
 - La integración continua vuelve a pasar: `mongo:8` no arranca con el kernel de la imagen `ubuntu-24.04` actual de GitHub, así que las pruebas corren en `ubuntu-22.04` hasta que MongoDB lo corrija.
