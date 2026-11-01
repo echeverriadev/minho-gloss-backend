@@ -6,6 +6,10 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+## [0.3.0] - 2026-11-01
+
+Fase 3 del roadmap: la operación diaria del autolavado. Cada visita se registra como una atención con sus servicios, cliente opcional, precios personalizados por el admin y un detalle imprimible, como base para las métricas.
+
 ### Agregado
 
 - **Operación del día (fase 3):** `POST /api/atenciones` registra cada visita con uno o más servicios y extras del catálogo, cliente opcional, tipo de vehículo, placa opcional, método de pago y notas. La API copia nombre y precio de lista según el vehículo, calcula el total y asigna un número correlativo.
@@ -17,6 +21,10 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 ### Cambiado
 
 - Borrar los datos personales de un cliente (RGPD) también vacía la placa de sus atenciones.
+
+### Corregido
+
+- La integración continua vuelve a pasar: `mongo:8` no arranca con el kernel de la imagen `ubuntu-24.04` actual de GitHub, así que las pruebas corren en `ubuntu-22.04` hasta que MongoDB lo corrija.
 
 ## [0.2.0] - 2026-10-25
 
@@ -41,5 +49,6 @@ Primera versión publicada. Incluye las fases 0, 1 y 2 del roadmap: entorno, esp
 
 - En desarrollo, el login funcionaba en la API pero la app no entraba al panel si se abría como `127.0.0.1` o desde el celular: CORS acepta ahora los orígenes locales y `CORS_ORIGIN` admite varios orígenes separados por comas.
 
-[Sin publicar]: https://github.com/echeverriadev/minho-gloss-backend/compare/v0.2.0...develop
+[Sin publicar]: https://github.com/echeverriadev/minho-gloss-backend/compare/v0.3.0...develop
+[0.3.0]: https://github.com/echeverriadev/minho-gloss-backend/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/echeverriadev/minho-gloss-backend/releases/tag/v0.2.0
