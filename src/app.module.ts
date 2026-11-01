@@ -19,6 +19,7 @@ import { UsuariosModule } from './modules/usuarios/usuarios.module.js';
       inject: [ConfigService],
       useFactory: (config: ConfigService<AppConfig, true>) => ({
         uri: config.get('mongoUri', { infer: true }),
+        dbName: config.get('mongoDbName', { infer: true }),
       }),
     }),
     HealthModule,

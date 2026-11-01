@@ -36,7 +36,7 @@ Los datos de MongoDB SHALL guardarse en el volumen `mongo_data` y sobrevivir a `
 - **THEN** los datos cargados previamente siguen en la base
 
 ### Requirement: Configuración por variables de entorno
-La configuración SHALL leerse de variables de entorno (`PORT`, `MONGO_URI`, `CORS_ORIGIN`), documentadas en `.env.example`. El archivo `.env` SHALL ser opcional y nunca versionarse.
+La configuración SHALL leerse de variables de entorno (`PORT`, `MONGO_URI`, `CORS_ORIGIN`; en Vercel, `MONGODB_URI` y `MONGO_DB_NAME` de la integración de Atlas), documentadas en `.env.example`. El archivo `.env` SHALL ser opcional y nunca versionarse.
 
 #### Scenario: Cambiar el origen permitido por CORS
 - **WHEN** el frontend corre en otro puerto

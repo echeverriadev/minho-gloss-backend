@@ -21,7 +21,10 @@ export interface MailConfig {
 export interface AppConfig {
   nodeEnv: string;
   port: number;
+  /** `MONGO_URI`, o `MONGODB_URI` si la base viene de la integración de MongoDB Atlas en Vercel. */
   mongoUri: string;
+  /** Base a usar cuando la URI no la indica, como en las de Atlas (`MONGO_DB_NAME`). */
+  mongoDbName?: string;
   /** Orígenes permitidos por CORS (`CORS_ORIGIN`, separados por comas). */
   corsOrigins: string[];
   frontendUrl: string;
@@ -87,7 +90,11 @@ export default (): AppConfig => {
   return {
     nodeEnv,
     port: Number(process.env.PORT ?? 3000),
-    mongoUri: process.env.MONGO_URI ?? 'mongodb://localhost:27017/minho_gloss',
+    mongoUri:
+      vacioComoUndefined(process.env.MONGO_URI) ??
+      vacioComoUndefined(process.env.MONGODB_URI) ??
+      'mongodb://localhost:27017/minho_gloss',
+    mongoDbName: vacioComoUndefined(process.env.MONGO_DB_NAME),
     corsOrigins: (process.env.CORS_ORIGIN ?? 'http://localhost:5173')
       .split(',')
       .map((origen) => origen.trim().replace(/\/+$/, ''))

@@ -29,6 +29,20 @@ describe('configuration', () => {
     expect(() => configuration()).toThrow('JWT_SECRET');
   });
 
+  it('toma MONGODB_URI de la integración de Atlas si no hay MONGO_URI', () => {
+    vi.stubEnv('MONGO_URI', '');
+    vi.stubEnv('MONGODB_URI', 'mongodb+srv://atlas.example.net/?retryWrites=true');
+    vi.stubEnv('MONGO_DB_NAME', 'minho_gloss');
+    expect(configuration().mongoUri).toBe('mongodb+srv://atlas.example.net/?retryWrites=true');
+    expect(configuration().mongoDbName).toBe('minho_gloss');
+  });
+
+  it('prefiere MONGO_URI a MONGODB_URI', () => {
+    vi.stubEnv('MONGO_URI', 'mongodb://mongo:27017/minho_gloss');
+    vi.stubEnv('MONGODB_URI', 'mongodb+srv://atlas.example.net/');
+    expect(configuration().mongoUri).toBe('mongodb://mongo:27017/minho_gloss');
+  });
+
   it('usa un secreto de desarrollo fuera de producción', () => {
     vi.stubEnv('NODE_ENV', 'development');
     vi.stubEnv('JWT_SECRET', '');
