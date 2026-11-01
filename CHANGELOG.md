@@ -22,6 +22,10 @@ Fase 3 del roadmap: la operación diaria del autolavado. Cada visita se registra
 
 - Borrar los datos personales de un cliente (RGPD) también vacía la placa de sus atenciones.
 
+### Corregido
+
+- La integración continua vuelve a pasar: `mongo:8` no arranca con el kernel de la imagen `ubuntu-24.04` actual de GitHub, así que las pruebas corren en `ubuntu-22.04` hasta que MongoDB lo corrija.
+
 ## [0.2.0] - 2026-10-25
 
 Primera versión publicada. Incluye las fases 0, 1 y 2 del roadmap: entorno, especificaciones y la base funcional de la API (acceso, usuarios, clientes, catálogo de servicios y preferencias).
