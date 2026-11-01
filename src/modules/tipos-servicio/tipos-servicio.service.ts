@@ -159,6 +159,14 @@ export class TiposServicioService {
     return calcularPrecio(await this.findLeanOrFail(id), tipoVehiculo);
   }
 
+  /** Entradas del catálogo (activas o no) por id, para registrar una atención. */
+  async findPorIds(ids: readonly string[]): Promise<TipoServicioLean[]> {
+    return this.tipoServicioModel
+      .find({ _id: { $in: ids } })
+      .lean<TipoServicioLean[]>()
+      .exec();
+  }
+
   /** Para la carga inicial: indica si el catálogo no tiene ninguna entrada. */
   async estaVacio(): Promise<boolean> {
     return (await this.tipoServicioModel.countDocuments().exec()) === 0;

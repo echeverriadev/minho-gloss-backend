@@ -70,6 +70,45 @@ export const MENSAJES_PT: Readonly<Record<string, string>> = {
   'El orden debe ser 0 o mayor': 'A ordem deve ser 0 ou maior',
   'El tipo de vehículo debe ser ligeiro, suv, monovolume o carrinha':
     'O tipo de veículo deve ser ligeiro, suv, monovolume ou carrinha',
+  // Atenciones
+  'Atención no encontrada': 'Atendimento não encontrado',
+  'La fecha de la atención no puede estar en el futuro':
+    'A data do atendimento não pode ser no futuro',
+  'La fecha de la atención no es válida': 'A data do atendimento não é válida',
+  'Solo un administrador puede registrar atenciones de días anteriores':
+    'Só um administrador pode registar atendimentos de dias anteriores',
+  'Solo un administrador puede ver atenciones de otros días':
+    'Só um administrador pode ver atendimentos de outros dias',
+  'Solo un administrador puede editar atenciones de días anteriores':
+    'Só um administrador pode editar atendimentos de dias anteriores',
+  'Solo un administrador puede cambiar precios o agregar servicios personalizados':
+    'Só um administrador pode alterar preços ou adicionar serviços personalizados',
+  'Los servicios personalizados necesitan nombre y precio':
+    'Os serviços personalizados precisam de nome e preço',
+  'La atención ya está anulada': 'O atendimento já está anulado',
+  'La atención está anulada y no se puede editar':
+    'O atendimento está anulado e não pode ser editado',
+  'La fecha desde no puede ser posterior a hasta': 'A data desde não pode ser posterior à data até',
+  'El servicio no es válido': 'O serviço não é válido',
+  'El cliente no es válido': 'O cliente não é válido',
+  'El nombre del servicio debe ser un texto': 'O nome do serviço deve ser um texto',
+  'El nombre del servicio debe tener entre 2 y 60 caracteres':
+    'O nome do serviço deve ter entre 2 e 60 caracteres',
+  'El precio debe ser un entero en céntimos, 0 o mayor':
+    'O preço deve ser um inteiro em cêntimos, 0 ou mais',
+  'La placa debe ser un texto': 'A matrícula deve ser um texto',
+  'La placa debe tener entre 2 y 12 letras o números':
+    'A matrícula deve ter entre 2 e 12 letras ou números',
+  'Agrega al menos un servicio': 'Adiciona pelo menos um serviço',
+  'Una atención puede tener hasta 20 servicios': 'Um atendimento pode ter até 20 serviços',
+  'El método de pago debe ser efectivo, tarjeta, mbway, transferencia u otro':
+    'O método de pagamento deve ser efectivo, tarjeta, mbway, transferencia ou otro',
+  'Las notas no pueden superar los 300 caracteres': 'As notas não podem ter mais de 300 caracteres',
+  'El motivo es obligatorio': 'O motivo é obrigatório',
+  'El motivo debe tener entre 3 y 200 caracteres': 'O motivo deve ter entre 3 e 200 caracteres',
+  'desde debe ser una fecha AAAA-MM-DD': 'desde deve ser uma data AAAA-MM-DD',
+  'hasta debe ser una fecha AAAA-MM-DD': 'hasta deve ser uma data AAAA-MM-DD',
+  'El estado debe ser completada o anulada': 'O estado deve ser completada ou anulada',
   // Generales
   'El id no es válido': 'O id não é válido',
   'Recurso no encontrado': 'Recurso não encontrado',
@@ -105,6 +144,10 @@ const PATRONES_PT: readonly [RegExp, (...grupos: string[]) => string][] = [
     (nombre) => `O documento de identificação já está registado para ${nombre}`,
   ],
   [/^Ya existe un servicio llamado (.+)$/, (nombre) => `Já existe um serviço chamado ${nombre}`],
+  [
+    /^El servicio (.+) ya no está disponible$/,
+    (nombre) => `O serviço ${nombre} já não está disponível`,
+  ],
   [
     /^Falta el precio para (.+)$/,
     (tipo) => `Falta o preço para ${TIPOS_VEHICULO_PT[tipo] ?? tipo}`,

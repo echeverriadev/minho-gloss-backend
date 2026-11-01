@@ -1,6 +1,6 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import type { QueryFilter, Model } from 'mongoose';
+import { InjectConnection, InjectModel } from '@nestjs/mongoose';
+import { type Connection, type QueryFilter, type Model, Types } from 'mongoose';
 import type { UsuarioSesion } from '../../common/auth/usuario-sesion.js';
 import { toId } from '../../common/mongo/to-id.js';
 import {
@@ -24,6 +24,15 @@ export const MENSAJE_YA_ANONIMIZADO = 'El cliente ya fue anonimizado';
 
 type CampoUnico = 'telefono' | 'cedula';
 
+export interface ClienteResumen {
+  id: string;
+  nombre: string;
+  apellido: string;
+  cedula: string | null;
+  telefono: string | null;
+  email: string | null;
+}
+
 const MENSAJE_DUPLICADO: Record<CampoUnico, string> = {
   telefono: 'El teléfono ya está registrado para',
   cedula: 'La cédula ya está registrada para',
@@ -35,7 +44,10 @@ function textoBusqueda(nombre: string, apellido: string): string {
 
 @Injectable()
 export class ClientesService {
-  constructor(@InjectModel(Cliente.name) private readonly clienteModel: Model<Cliente>) {}
+  constructor(
+    @InjectModel(Cliente.name) private readonly clienteModel: Model<Cliente>,
+    @InjectConnection() private readonly connection: Connection,
+  ) {}
 
   async create(dto: CreateClienteDto): Promise<ClienteResponseDto> {
     await this.asegurarUnicos({ telefono: dto.telefono, cedula: dto.cedula });
@@ -144,6 +156,48 @@ export class ClientesService {
         },
       )
       .exec();
+    // La placa es el único dato personal que guardan sus atenciones (domain-model, RGPD).
+    // Se usa la colección directamente para no crear una dependencia circular con `atenciones`.
+    await this.connection
+      .collection('atenciones')
+      .updateMany({ clienteId: new Types.ObjectId(id) }, { $set: { placa: null } });
+  }
+
+  /** Para registrar una atención: el cliente debe existir y estar activo. */
+  async asegurarActivo(id: string): Promise<void> {
+    await this.findActivoOrFail(id);
+  }
+
+  /** Datos de contacto de varios clientes (activos o no), para mostrarlos en sus atenciones. */
+  async resumenes(ids: readonly string[]): Promise<Map<string, ClienteResumen>> {
+    if (ids.length === 0) {
+      return new Map();
+    }
+    const clientes = await this.clienteModel
+      .find({ _id: { $in: ids } }, { nombre: 1, apellido: 1, cedula: 1, telefono: 1, email: 1 })
+      .lean<ClienteLean[]>()
+      .exec();
+    return new Map(
+      clientes.map((cliente) => [
+        toId(cliente),
+        {
+          id: toId(cliente),
+          nombre: cliente.nombre,
+          apellido: cliente.apellido,
+          cedula: cliente.cedula ?? null,
+          telefono: cliente.telefono ?? null,
+          email: cliente.email ?? null,
+        },
+      ]),
+    );
+  }
+
+  /** Guarda los contadores que calcula el módulo de atenciones (domain-model). */
+  async actualizarContadores(
+    id: string,
+    contadores: Pick<Cliente, 'ultimoServicioEn' | 'totalServicios'>,
+  ): Promise<void> {
+    await this.clienteModel.updateOne({ _id: id }, { $set: contadores }).exec();
   }
 
   private async findActivoOrFail(id: string): Promise<ClienteLean> {
