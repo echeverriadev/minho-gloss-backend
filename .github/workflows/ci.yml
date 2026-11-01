@@ -16,7 +16,9 @@ permissions:
 jobs:
   calidad:
     name: Lint, formato, tipos, pruebas y specs
-    runs-on: ubuntu-latest
+    # mongo:8 no arranca con el kernel 6.19+ de la imagen ubuntu-24.04 de octubre de 2026
+    # (https://jira.mongodb.org/browse/SERVER-121912); se vuelve a ubuntu-latest cuando MongoDB lo corrija.
+    runs-on: ubuntu-22.04
     timeout-minutes: 15
     env:
       OPENSPEC_TELEMETRY: 0
