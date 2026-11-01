@@ -6,6 +6,15 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+## [0.3.1] - 2026-11-01
+
+Corrección para que la API arranque en Vercel.
+
+### Corregido
+
+- La API no arrancaba en Vercel (`ERR_REQUIRE_ESM`): `@nestjs/throttler` es CommonJS y el entorno de Vercel no le deja cargar NestJS 12, que es solo ESM. Se reemplazó por un guard propio (`LimiteIntentosGuard`) con los mismos límites: 5 intentos de login, 3 pedidos de recuperación y 5 restablecimientos por minuto y por IP, con la misma respuesta 429.
+- En Vercel la API toma la IP real del cliente de `X-Forwarded-For` (`trust proxy`), para que el límite de intentos no se comparta entre todos los usuarios.
+
 ## [0.3.0] - 2026-11-01
 
 Fase 3 del roadmap: la operación diaria del autolavado. Cada visita se registra como una atención con sus servicios, cliente opcional, precios personalizados por el admin y un detalle imprimible, como base para las métricas.
@@ -54,6 +63,7 @@ Primera versión publicada. Incluye las fases 0, 1 y 2 del roadmap: entorno, esp
 
 - En desarrollo, el login funcionaba en la API pero la app no entraba al panel si se abría como `127.0.0.1` o desde el celular: CORS acepta ahora los orígenes locales y `CORS_ORIGIN` admite varios orígenes separados por comas.
 
-[Sin publicar]: https://github.com/echeverriadev/minho-gloss-backend/compare/v0.3.0...develop
+[Sin publicar]: https://github.com/echeverriadev/minho-gloss-backend/compare/v0.3.1...develop
+[0.3.1]: https://github.com/echeverriadev/minho-gloss-backend/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/echeverriadev/minho-gloss-backend/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/echeverriadev/minho-gloss-backend/releases/tag/v0.2.0

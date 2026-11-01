@@ -18,9 +18,12 @@ import {
   ApiTooManyRequestsResponse,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
 import { Public } from '../../common/auth/public.decorator.js';
 import { UsuarioActual } from '../../common/auth/usuario-actual.decorator.js';
+import {
+  LimitarIntentos,
+  LimiteIntentosGuard,
+} from '../../common/limite-intentos/limite-intentos.guard.js';
 import type { UsuarioSesion } from '../../common/auth/usuario-sesion.js';
 import { UsuariosService } from '../usuarios/usuarios.service.js';
 import { AuthService } from './auth.service.js';
@@ -43,8 +46,8 @@ export class AuthController {
   @Public()
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(ThrottlerGuard)
-  @Throttle({ default: { limit: 5, ttl: UN_MINUTO } })
+  @UseGuards(LimiteIntentosGuard)
+  @LimitarIntentos(5, UN_MINUTO)
   @ApiOperation({ summary: 'Iniciar sesión con correo y contraseña' })
   @ApiOkResponse({ type: LoginResponseDto })
   @ApiBadRequestResponse({ description: 'Datos inválidos' })
@@ -93,8 +96,8 @@ export class AuthController {
   @Public()
   @Post('recuperar-password')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @UseGuards(ThrottlerGuard)
-  @Throttle({ default: { limit: 3, ttl: UN_MINUTO } })
+  @UseGuards(LimiteIntentosGuard)
+  @LimitarIntentos(3, UN_MINUTO)
   @ApiOperation({ summary: 'Pedir un enlace por correo para elegir una contraseña nueva' })
   @ApiNoContentResponse({ description: 'Si el correo existe, se envió el enlace' })
   @ApiBadRequestResponse({ description: 'Correo inválido' })
@@ -106,8 +109,8 @@ export class AuthController {
   @Public()
   @Post('restablecer-password')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @UseGuards(ThrottlerGuard)
-  @Throttle({ default: { limit: 5, ttl: UN_MINUTO } })
+  @UseGuards(LimiteIntentosGuard)
+  @LimitarIntentos(5, UN_MINUTO)
   @ApiOperation({ summary: 'Elegir una contraseña nueva con el enlace del correo' })
   @ApiNoContentResponse({ description: 'Contraseña cambiada' })
   @ApiBadRequestResponse({ description: 'Enlace inválido o vencido, o contraseña inválida' })
