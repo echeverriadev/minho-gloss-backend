@@ -38,4 +38,7 @@ async function bootstrap() {
 
   await app.listen(config.get('port', { infer: true }));
 }
-await bootstrap();
+// Sin `await`: en Vercel la función espera a que el módulo termine de cargar
+// antes de atender `app.listen`; con `await` ambos se esperan entre sí y la
+// petición se queda colgada sin logs.
+void bootstrap();
