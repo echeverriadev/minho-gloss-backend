@@ -1,12 +1,17 @@
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import type { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module.js';
 import { configurarApp } from './app.setup.js';
 import { type AppConfig, isOrigenPermitido } from './config/configuration.js';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  if (process.env.VERCEL) {
+    // Detrás del proxy de Vercel: la IP real del cliente llega en X-Forwarded-For.
+    app.set('trust proxy', 1);
+  }
   const config = app.get(ConfigService<AppConfig, true>);
 
   configurarApp(app);
