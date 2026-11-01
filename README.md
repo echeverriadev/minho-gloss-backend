@@ -4,7 +4,7 @@ API de gestión del autolavado Minho Gloss: clientes, servicios, métricas y pos
 
 **Stack:** NestJS 12 · TypeScript · MongoDB (Mongoose) · Swagger · Vitest · oxlint · Prettier · OpenSpec
 
-**Versión actual:** 0.3.0 · Cambios en [`CHANGELOG.md`](CHANGELOG.md) · Versionado con SemVer Simplificado (ver la spec `git-workflow`).
+**Versión actual:** 0.3.1 · Cambios en [`CHANGELOG.md`](CHANGELOG.md) · Versionado con SemVer Simplificado (ver la spec `git-workflow`).
 
 ## Requisitos
 

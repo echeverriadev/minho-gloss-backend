@@ -1,6 +1,6 @@
 {
   "name": "minho-gloss-backend",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "API de gestión del autolavado Minho Gloss",
   "private": true,
   "license": "UNLICENSED",
@@ -33,7 +33,6 @@
     "@nestjs/mongoose": "^12.0.0",
     "@nestjs/platform-express": "^12.0.1",
     "@nestjs/swagger": "^12.0.2",
-    "@nestjs/throttler": "^6.7.1",
     "bcryptjs": "^3.0.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
