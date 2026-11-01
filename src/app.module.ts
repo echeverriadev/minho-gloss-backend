@@ -20,10 +20,10 @@ import { UsuariosModule } from './modules/usuarios/usuarios.module.js';
       useFactory: (config: ConfigService<AppConfig, true>) => ({
         uri: config.get('mongoUri', { infer: true }),
         dbName: config.get('mongoDbName', { infer: true }),
-        // En Vercel cada función tiene un tiempo máximo: si Mongo no responde,
+        // En Vercel la función tiene ~10 s para arrancar: si Mongo no responde,
         // fallar pronto y dejar el error en los logs en vez de reintentar minutos.
-        serverSelectionTimeoutMS: 10_000,
-        retryAttempts: 1,
+        serverSelectionTimeoutMS: 5_000,
+        retryAttempts: 0,
       }),
     }),
     HealthModule,
