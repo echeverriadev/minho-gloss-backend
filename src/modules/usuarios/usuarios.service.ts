@@ -218,6 +218,18 @@ export class UsuariosService implements OnApplicationBootstrap {
       throw new ConflictException(MENSAJE_ULTIMO_ADMIN);
     }
   }
+
+  /** Nombres de varios usuarios (activos o no), para mostrar quién registró cada atención. */
+  async nombres(ids: readonly string[]): Promise<Map<string, string>> {
+    if (ids.length === 0) {
+      return new Map();
+    }
+    const usuarios = await this.usuarioModel
+      .find({ _id: { $in: ids } }, { nombre: 1 })
+      .lean<UsuarioLean[]>()
+      .exec();
+    return new Map(usuarios.map((usuario) => [toId(usuario), usuario.nombre]));
+  }
 }
 
 export function toSesion(

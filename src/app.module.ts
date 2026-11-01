@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { JwtAuthGuard } from './common/auth/jwt-auth.guard.js';
 import { RolesGuard } from './common/auth/roles.guard.js';
 import configuration, { type AppConfig } from './config/configuration.js';
+import { AtencionesModule } from './modules/atenciones/atenciones.module.js';
 import { AuthModule } from './modules/auth/auth.module.js';
 import { ClientesModule } from './modules/clientes/clientes.module.js';
 import { HealthModule } from './modules/health/health.module.js';
@@ -25,6 +26,7 @@ import { UsuariosModule } from './modules/usuarios/usuarios.module.js';
     AuthModule,
     ClientesModule,
     TiposServicioModule,
+    AtencionesModule,
   ],
   providers: [
     // Protegido por defecto: primero se exige sesión y luego el rol (spec auth).

@@ -4,6 +4,8 @@ API de gestión del autolavado Minho Gloss: clientes, servicios, métricas y pos
 
 **Stack:** NestJS 12 · TypeScript · MongoDB (Mongoose) · Swagger · Vitest · oxlint · Prettier · OpenSpec
 
+**Versión actual:** 0.2.0 · Cambios en [`CHANGELOG.md`](CHANGELOG.md) · Versionado con SemVer Simplificado (ver la spec `git-workflow`).
+
 ## Requisitos
 
 Solo **Docker** y **Docker Compose** (Docker Desktop en Windows/macOS). No hace falta instalar Node.js ni MongoDB.
