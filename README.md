@@ -106,3 +106,19 @@ Reglas completas:
 ```bash
 docker build --target prod -t minho-gloss-api .
 ```
+
+### Vercel
+
+La API se publica en Vercel como una sola Vercel Function (detección automática de NestJS sobre `src/main.ts`), en la región Frankfurt (`fra1`, fijada en `vercel.json`). Cada push a `main` despliega producción. La base de datos es MongoDB Atlas (clúster M0 en la UE).
+
+Variables de entorno del proyecto de Vercel (las mismas de `.env.example`):
+
+| Variable                                                                       | Valor en producción                                                                                                     |
+| ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
+| `MONGO_URI`                                                                    | Cadena `mongodb+srv://…` de Atlas. En Atlas, _Network Access_ debe permitir `0.0.0.0/0` porque Vercel no tiene IP fija. |
+| `JWT_SECRET`                                                                   | Al menos 32 caracteres (`openssl rand -hex 32`).                                                                        |
+| `CORS_ORIGIN`, `FRONTEND_URL`                                                  | URL pública del frontend.                                                                                               |
+| `ADMIN_EMAIL`, `ADMIN_PASSWORD`                                                | Administrador inicial, se crea en el primer arranque si no hay usuarios.                                                |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM` | Proveedor de correo (por ejemplo Brevo o Resend).                                                                       |
+
+Para cargar el catálogo inicial en Atlas, desde una copia local: `MONGO_URI="mongodb+srv://…" npm run seed:catalogo`.
